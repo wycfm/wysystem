@@ -1,4 +1,4 @@
-package cn.wycfm.blog.action;
+package cn.wycfm.blog.servlet;
 
 import java.io.IOException;
 
@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class BlogAction extends HttpServlet{
+public class BlogServlet extends HttpServlet{
 
 	/**
 	 * 
@@ -18,6 +18,7 @@ public class BlogAction extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		System.out.println("BlogAction:" + req.getRequestURI());
+		req.getRequestDispatcher("/WEB-INF/t/blog/index/index.html").forward(req, resp);
 	}
 	
 	@Override

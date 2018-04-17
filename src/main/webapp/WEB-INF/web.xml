@@ -7,23 +7,27 @@
   
   <servlet>
   	<servlet-name>coreAction</servlet-name>
-  	<servlet-class>cn.wycfm.core.action.CoreAction</servlet-class>
+  	<servlet-class>cn.wycfm.core.servlet.CoreServlet</servlet-class>
   	<load-on-startup>1</load-on-startup>
   </servlet>
   
   
   <servlet>
   	<servlet-name>blogAction</servlet-name>
-  	<servlet-class>cn.wycfm.blog.action.BlogAction</servlet-class>
+  	<servlet-class>cn.wycfm.blog.servlet.BlogServlet</servlet-class>
   </servlet>
   
   <servlet-mapping>
   	<servlet-name>coreAction</servlet-name>
-  	<url-pattern>/</url-pattern>
+  	<url-pattern>/coreIndex</url-pattern>
   </servlet-mapping>
   
   <servlet-mapping>
   	<servlet-name>blogAction</servlet-name>
-  	<url-pattern>/blog/</url-pattern>
+  	<url-pattern>/blog</url-pattern>
   </servlet-mapping>
+  
+  <welcome-file-list>
+  	<welcome-file>coreIndex</welcome-file>
+  </welcome-file-list>
 </web-app>

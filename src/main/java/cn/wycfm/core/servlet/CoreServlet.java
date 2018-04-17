@@ -1,4 +1,4 @@
-package cn.wycfm.core.action;
+package cn.wycfm.core.servlet;
 
 import java.io.IOException;
 
@@ -7,8 +7,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class CoreAction extends HttpServlet{
+import org.apache.log4j.Logger;
 
+public class CoreServlet extends HttpServlet{
+	
+	private static Logger log = Logger.getLogger(CoreServlet.class);
+	
+	public final static String BLOG_SERVER_HOST = "blog.wycfm.com";
 	/**
 	 * 
 	 */
@@ -19,7 +24,15 @@ public class CoreAction extends HttpServlet{
 		// TODO Auto-generated method stub
 		//super.doGet(req, resp);
 		String requestURI = req.getRequestURI();
-		System.out.println(requestURI);
+		String serverName = req.getServerName();
+		//System.out.println("serverName:"+serverName);
+		log.info("serverName:"+serverName);
+		if(BLOG_SERVER_HOST.equals(serverName)) {
+			req.getRequestDispatcher("/blog").forward(req, resp);
+		}else {
+			req.getRequestDispatcher("/index.html").forward(req, resp);
+		}
+		
 		
 	}
 	
