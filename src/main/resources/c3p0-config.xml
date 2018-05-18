@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<c3p0-config>
+
+    <default-config>
+
+       <property name="jdbcUrl">jdbc:mysql://47.97.221.240:3306/wysystem</property>
+
+       <property name="driverClass">com.mysql.cj.jdbc.Driver</property>
+
+       <property name="user">root</property>
+
+       <property name="password">robert1013</property>
+
+       <property name="acquireIncrement">3</property>
+
+       <property name="initialPoolSize">10</property>
+
+       <property name="minPoolSize">2</property>
+
+       <property name="maxPoolSize">10</property>
+
+    </default-config>
+
+   <!--  <named-config name="oracle-config">
+
+       <property name="jdbcUrl">jdbc:mysql://localhost:3306/mydb1</property>
+
+       <property name="driverClass">com.mysql.jdbc.Driver</property>
+
+       <property name="user">root</property>
+
+       <property name="password">123</property>
+
+       <property name="acquireIncrement">3</property>
+
+       <property name="initialPoolSize">10</property>
+
+       <property name="minPoolSize">2</property>
+
+       <property name="maxPoolSize">10</property>
+
+    </named-config> -->
+
+</c3p0-config>
