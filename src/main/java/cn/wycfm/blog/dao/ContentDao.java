@@ -6,5 +6,5 @@ import java.util.Map;
 
 public interface ContentDao {
 	
-	public List<Map<String, Object>> getContentList() throws SQLException;
+	public List<Map<String, Object>> listContent() throws SQLException;
 }

@@ -14,7 +14,7 @@ import cn.wycfm.core.util.DBUtil;
 
 public class ContentDaoImpl implements ContentDao{
 
-	public List<Map<String, Object>> getContentList() throws SQLException {
+	public List<Map<String, Object>> listContent() throws SQLException {
 		List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
 		Connection con = DBUtil.getConnection();
 		PreparedStatement prepareStatement = null;

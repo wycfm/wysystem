@@ -6,11 +6,11 @@
 
        <property name="jdbcUrl">jdbc:mysql://47.97.221.240:3306/wysystem</property>
 
-       <property name="driverClass">com.mysql.cj.jdbc.Driver</property>
+       <property name="driverClass">com.mysql.jdbc.Driver</property>
 
-       <property name="user">root</property>
+       <property name="user">wy</property>
 
-       <property name="password">robert1013</property>
+       <property name="password">wy1013</property>
 
        <property name="acquireIncrement">3</property>
 
