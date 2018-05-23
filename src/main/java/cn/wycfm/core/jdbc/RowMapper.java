@@ -1,4 +1,4 @@
-package cn.wycfm.core.service;
+package cn.wycfm.core.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
