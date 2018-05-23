@@ -53,10 +53,14 @@ public abstract class BaseDao {
 		
 		return execute(psc, new PreparedStatementCallback<T>() {
 			public T doInPreparedStatement(PreparedStatement ps) throws SQLException {
+				T result = null;
 				ResultSet rs = null;
 				try {
 					rs = ps.executeQuery();
-					return rse.extractData(rs);
+					while(rs.next()) {
+						result = rse.extractData(rs);
+					}
+					return result;
 				}
 				finally {
 					DBUtil.closeResultSet(rs);
@@ -76,6 +80,7 @@ public abstract class BaseDao {
 		try {
 			con = DBUtil.getConnection();
 			ps = psc.createPreparedStatement(con);
+			logger.info(ps);
 			T result = action.doInPreparedStatement(ps);
 			return result;
 		} catch (SQLException e) {

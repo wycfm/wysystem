@@ -13,7 +13,7 @@ import cn.wycfm.core.model.User;
 public class UserDaoImpl extends BaseDao implements UserDao {
 
 	public User getUser(String userName, String password) throws SQLException{
-		String sql = "select user_id,username,nick_name,signature,mobile,email from user where username=? and password=md5(?)";
+		String sql = "select user_id,username,nickname,signature,mobile,email from user where username=? and password=md5(?)";
 		Object[] args = new Object[] {userName, password};
 		int[] argTypes = new int[] {Types.VARCHAR, Types.VARCHAR};
 		return (User) this.queryForObject(sql, args, argTypes, new ResultSetExtractor<Object>() {
@@ -21,7 +21,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 				User user = new User();
 				user.setUserId(rs.getInt("user_id"));
 				user.setUserName(rs.getString("username"));
-				user.setNickName(rs.getString("nick_name"));
+				user.setNickName(rs.getString("nickname"));
 				user.setSignature(rs.getString("signature"));
 				user.setMobile(rs.getString("mobile"));
 				user.setEmail(rs.getString("email"));
@@ -36,9 +36,9 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 
 	public void saveUser(User user) throws SQLException {
 		
-		StringBuilder sql = new StringBuilder("insert into user(username,password,nick_name,signature,mobile,email, ");
+		StringBuilder sql = new StringBuilder("insert into user(username,password,nickname,signature,mobile,email, ");
 		sql.append("register_time,register_ip,is_admin,is_disabled,last_login_time,last_login_ip)")
-		.append("values(?,?,?,?,?,?,")
+		.append("values(?,md5(?),?,?,?,?,")
 		.append("now(),?,0,0,now(),?)");
 		
 		Object[] args = new Object[] {user.getUserName(), user.getPassword(), user.getNickName(), 

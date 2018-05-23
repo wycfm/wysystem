@@ -27,6 +27,21 @@ public class User {
 	
 	
 	public User(String userName, String password, String nickName, String signature, String mobile, String email,
+			String registerIp, String lastLoginIp) {
+		super();
+		this.userName = userName;
+		this.password = password;
+		this.nickName = nickName;
+		this.signature = signature;
+		this.mobile = mobile;
+		this.email = email;
+		this.registerIp = registerIp;
+		this.lastLoginIp = lastLoginIp;
+	}
+
+
+
+	public User(String userName, String password, String nickName, String signature, String mobile, String email,
 			Date registerTime, String registerIp, Integer loginCount, Boolean boolAdmin, Boolean booldisabled,
 			Date lastLoginTime, String lastLoginIp) {
 		this.userName = userName;
