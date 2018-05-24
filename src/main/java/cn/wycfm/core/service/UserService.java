@@ -9,5 +9,6 @@ public interface UserService {
 	User getUser(String userName, String password) ;
 	List<User> listUser(Integer size, Integer offSet);
 	void saveUser(User user);
+	void updateUser(User user);
 	
 }

@@ -71,4 +71,17 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 		this.executeForUpdate(sql.toString(), args, argTypes);
 	}
 
+	public void updateUser(User user) throws SQLException {
+		
+		String sql = new String("update user set update_time=now(),mobile=?,email=?,signature=? where user_id=? ");
+		
+		Integer userId = user.getUserId();
+		String mobile = user.getMobile();
+		String email = user.getEmail();
+		String signature = user.getSignature();
+		Object[] args = new Object[] {mobile, email, signature, userId};
+		int[] argTypes = new int[] {Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.INTEGER};
+		this.executeForUpdate(sql, args, argTypes);
+	}
+
 }

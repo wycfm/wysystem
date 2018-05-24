@@ -34,7 +34,6 @@ public class UserServiceImpl implements UserService{
 		try {
 			return userDao.listUser(size, offSet);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return new ArrayList<User>();
@@ -49,6 +48,11 @@ public class UserServiceImpl implements UserService{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void updateUser(User user) {
+		userDao = new UserDaoImpl();
+		
 	}
 
 

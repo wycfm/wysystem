@@ -18,7 +18,7 @@ public class User {
 	private Boolean booldisabled;
 	private Date lastLoginTime;
 	private String lastLoginIp;
-	
+	private Date updateTime;
 	
 	public User() {
 		init();
@@ -146,6 +146,18 @@ public class User {
 	}
 	public void setLastLoginIp(String lastLoginIp) {
 		this.lastLoginIp = lastLoginIp;
+	}
+
+
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
 
 
