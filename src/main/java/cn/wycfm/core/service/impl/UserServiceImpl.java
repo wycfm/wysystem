@@ -1,6 +1,7 @@
 package cn.wycfm.core.service.impl;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.wycfm.core.dao.UserDao;
@@ -24,8 +25,19 @@ public class UserServiceImpl implements UserService{
 		return null;
 	}
 
-	public List<User> listUser() {
-		return null;
+	public List<User> listUser(Integer size, Integer offSet) {
+		userDao = new UserDaoImpl();
+		if(size == null || offSet == null) {
+			size = 10;
+			offSet = 1;
+		}
+		try {
+			return userDao.listUser(size, offSet);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<User>();
 	}
 
 	public void saveUser(User user) {

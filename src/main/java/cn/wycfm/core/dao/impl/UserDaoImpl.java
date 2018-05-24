@@ -7,6 +7,7 @@ import java.util.List;
 
 import cn.wycfm.core.dao.BaseDao;
 import cn.wycfm.core.dao.UserDao;
+import cn.wycfm.core.jdbc.ParameterizedRowMapper;
 import cn.wycfm.core.jdbc.ResultSetExtractor;
 import cn.wycfm.core.model.User;
 
@@ -18,6 +19,30 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 		int[] argTypes = new int[] {Types.VARCHAR, Types.VARCHAR};
 		return (User) this.queryForObject(sql, args, argTypes, new ResultSetExtractor<Object>() {
 			public Object extractData(ResultSet rs) throws SQLException {
+				
+				User user = new User();
+				while(rs.next()) {
+					user.setUserId(rs.getInt("user_id"));
+					user.setUserName(rs.getString("username"));
+					user.setNickName(rs.getString("nickname"));
+					user.setSignature(rs.getString("signature"));
+					user.setMobile(rs.getString("mobile"));
+					user.setEmail(rs.getString("email"));
+				}
+				return user;
+			}
+		});
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<User> listUser(Integer size, Integer offSet) throws SQLException{
+		String sql = "select user_id,username,nickname,signature,mobile,email from user limit ? offset ?";
+		Object[] args = new Object[] {size, (offSet-1)*size};
+		int[] argTypes = new int[] {Types.INTEGER, Types.INTEGER};
+		
+		return this.queryForList(sql, args, argTypes, new ParameterizedRowMapper<Object>() {
+			
+			public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
 				User user = new User();
 				user.setUserId(rs.getInt("user_id"));
 				user.setUserName(rs.getString("username"));
@@ -28,10 +53,6 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 				return user;
 			}
 		});
-	}
-
-	public List<User> listUser() {
-		return null;
 	}
 
 	public void saveUser(User user) throws SQLException {

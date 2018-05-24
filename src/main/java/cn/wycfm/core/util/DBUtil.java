@@ -16,7 +16,7 @@ public class DBUtil {
 	private static DataSource dataSource = null;
 	
 	static {
-		dataSource = new ComboPooledDataSource();
+		dataSource = new ComboPooledDataSource("mysql");
 	}
 	
 	public static Connection getConnection() throws SQLException{

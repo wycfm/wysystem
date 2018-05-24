@@ -147,6 +147,16 @@ public class User {
 	public void setLastLoginIp(String lastLoginIp) {
 		this.lastLoginIp = lastLoginIp;
 	}
+
+
+
+	public String toString() {
+		return "User [userId=" + userId + ", userName=" + userName + ", password=" + password + ", nickName=" + nickName
+				+ ", signature=" + signature + ", mobile=" + mobile + ", email=" + email + ", registerTime="
+				+ registerTime + ", registerIp=" + registerIp + ", loginCount=" + loginCount + ", boolAdmin="
+				+ boolAdmin + ", booldisabled=" + booldisabled + ", lastLoginTime=" + lastLoginTime + ", lastLoginIp="
+				+ lastLoginIp + "]";
+	}
 	
 	
 }

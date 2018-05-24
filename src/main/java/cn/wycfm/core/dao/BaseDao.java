@@ -12,6 +12,8 @@ import cn.wycfm.core.jdbc.ParameterizedRowMapper;
 import cn.wycfm.core.jdbc.PreparedStatementCallback;
 import cn.wycfm.core.jdbc.PreparedStatementCreator;
 import cn.wycfm.core.jdbc.ResultSetExtractor;
+import cn.wycfm.core.jdbc.RowMapper;
+import cn.wycfm.core.jdbc.RowMapperResultSetExtractor;
 import cn.wycfm.core.jdbc.SimplePreparedStatementCreator;
 import cn.wycfm.core.jdbc.SqlProvider;
 import cn.wycfm.core.util.DBUtil;
@@ -25,15 +27,13 @@ public abstract class BaseDao {
 		return query(psc, rse);
 	}
 	
-	public List queryForList(String sql, Object[] args, int[] argTypes, ParameterizedRowMapper<Object> prm) {
-		
-		
-		return null;
+	public List queryForList(String sql, Object[] args, int[] argTypes, ParameterizedRowMapper<Object> prm) throws SQLException{
+		PreparedStatementCreator psc = new SimplePreparedStatementCreator(sql, args, argTypes);
+		return query(psc, prm);
 	}
 	
 	public int executeForUpdate(String sql, Object[] args, int[] argTypes) throws SQLException{
 		PreparedStatementCreator psc = new SimplePreparedStatementCreator(sql, args, argTypes);
-		
 		return update(psc);
 	}
 	
@@ -57,9 +57,7 @@ public abstract class BaseDao {
 				ResultSet rs = null;
 				try {
 					rs = ps.executeQuery();
-					while(rs.next()) {
-						result = rse.extractData(rs);
-					}
+					result = rse.extractData(rs);
 					return result;
 				}
 				finally {
@@ -68,6 +66,12 @@ public abstract class BaseDao {
 				
 			}
 		} );
+	}
+	
+	
+	public <T> List<T> query(PreparedStatementCreator psc, RowMapper<T> rowMapper) throws SQLException{
+		
+		return query(psc, new RowMapperResultSetExtractor<T>(rowMapper));
 	}
 	
 	public <T> T execute(PreparedStatementCreator psc, PreparedStatementCallback<T> action) throws SQLException{
