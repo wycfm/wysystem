@@ -9,10 +9,9 @@ import cn.wycfm.blog.service.ContentService;
 
 public class ContentServiceImpl implements ContentService{
 
-	private ContentDao contentDao = null;
 	
 	public List<Map<String, Object>> listContent() throws Exception {
-		contentDao = new ContentDaoImpl();
+		ContentDao contentDao = new ContentDaoImpl();
 		return contentDao.listContent();
 	}
 

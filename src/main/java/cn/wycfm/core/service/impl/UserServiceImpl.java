@@ -11,10 +11,9 @@ import cn.wycfm.core.service.UserService;
 
 public class UserServiceImpl implements UserService{
 
-	private UserDao userDao;
 	
 	public User getUser(String userName, String password) {
-		userDao = new UserDaoImpl();
+		UserDao userDao = new UserDaoImpl();
 		if(userName != null && password != null) {
 			try {
 				return userDao.getUser(userName, password);
@@ -26,7 +25,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	public List<User> listUser(Integer size, Integer offSet) {
-		userDao = new UserDaoImpl();
+		UserDao userDao = new UserDaoImpl();
 		if(size == null || offSet == null) {
 			size = 10;
 			offSet = 1;
@@ -40,7 +39,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	public void saveUser(User user) {
-		userDao = new UserDaoImpl();
+		UserDao userDao = new UserDaoImpl();
 		try {
 			if(user != null) {
 				userDao.saveUser(user);
@@ -51,8 +50,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 	public void updateUser(User user) {
-		userDao = new UserDaoImpl();
-		
+		UserDao userDao = new UserDaoImpl();
+		try {
+			userDao.updateUser(user);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 
