@@ -12,6 +12,7 @@ import javax.servlet.ServletResponse;
 
 public class CoreFilter implements Filter{
 
+	
 	public void init(FilterConfig filterConfig) throws ServletException {
 		
 	}

@@ -19,6 +19,34 @@ public class Site {
 	private String keywords;
 	private String description;
 	
+	public Site() {
+		init();
+	}
+	
+	
+	public Site(Integer siteId, String domain, String sitePath, String siteName, String shortName, String protocol,
+			String dynamicSuffix, String staticSuffix, String staticDir, String indexToRoot, String staticIndex,
+			String domainAlias, String domainRedirect, String tplIndex, String keywords, String description) {
+		this.siteId = siteId;
+		this.domain = domain;
+		this.sitePath = sitePath;
+		this.siteName = siteName;
+		this.shortName = shortName;
+		this.protocol = protocol;
+		this.dynamicSuffix = dynamicSuffix;
+		this.staticSuffix = staticSuffix;
+		this.staticDir = staticDir;
+		this.indexToRoot = indexToRoot;
+		this.staticIndex = staticIndex;
+		this.domainAlias = domainAlias;
+		this.domainRedirect = domainRedirect;
+		this.tplIndex = tplIndex;
+		this.keywords = keywords;
+		this.description = description;
+	}
+
+
+	void init() {};
 	
 	public Integer getSiteId() {
 		return siteId;

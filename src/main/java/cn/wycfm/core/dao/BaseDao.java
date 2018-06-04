@@ -32,6 +32,11 @@ public abstract class BaseDao {
 		return query(psc, prm);
 	}
 	
+	public List queryForList(String sql,  ParameterizedRowMapper<Object> prm) throws SQLException{
+		PreparedStatementCreator psc = new SimplePreparedStatementCreator(sql, null, null);
+		return query(psc, prm);
+	}
+	
 	public int executeForUpdate(String sql, Object[] args, int[] argTypes) throws SQLException{
 		PreparedStatementCreator psc = new SimplePreparedStatementCreator(sql, args, argTypes);
 		return update(psc);
