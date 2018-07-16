@@ -24,13 +24,13 @@ public class BlogServlet extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		ContentService contentService = new ContentServiceImpl();
+		//ContentService contentService = new ContentServiceImpl();
 		System.out.println("BlogAction:" + req.getRequestURI());
 		try {
-			List<Map<String, Object>> contentList = contentService.listContent();
+			/*List<Map<String, Object>> contentList = contentService.listContent();
 			for (Map<String, Object> map : contentList) {
 				System.out.println("id:"+map.get("id")+",name:"+map.get("name"));
-			}
+			}*/
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
