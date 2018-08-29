@@ -1,4 +1,4 @@
-package cn.wycfm.blog.servlet;
+package cn.wycfm.bill.servlet;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,24 +7,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 添加文章，只有登陆用户可以添加文章
+ * Servlet implementation class BillServlet
  */
-public class ContentAddServlet extends HttpServlet {
+public class BillServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public BillServlet() {
+        super();
+    }
 
 	/**
-	 * get 方式访问跳转到文章添加页面
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/t/blog/member/addArticle.jsp").forward(request, response);
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
-	 * post 提交添加的文章
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		doGet(request, response);
 	}
 

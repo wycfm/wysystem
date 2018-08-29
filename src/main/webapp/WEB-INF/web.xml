@@ -32,6 +32,12 @@
   	<description></description>
   	<servlet-class>cn.wycfm.blog.servlet.ContentAddServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>BillServlet</servlet-name>
+  	<display-name>BillServlet</display-name>
+  	<description></description>
+  	<servlet-class>cn.wycfm.bill.BillServlet</servlet-class>
+  </servlet>
   
   <servlet-mapping>
   	<servlet-name>coreAction</servlet-name>
@@ -45,6 +51,10 @@
   <servlet-mapping>
   	<servlet-name>ContentAddServlet</servlet-name>
   	<url-pattern>/member/contentadd</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>BillServlet</servlet-name>
+  	<url-pattern>/BillServlet</url-pattern>
   </servlet-mapping>
   
   
