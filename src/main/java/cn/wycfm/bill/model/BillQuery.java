@@ -4,7 +4,7 @@ import java.util.Date;
 
 import cn.wycfm.core.model.User;
 
-public class Bill {
+public class BillQuery {
 
 	public Integer billId;
 	public Date billDate;
@@ -17,6 +17,11 @@ public class Bill {
 	public Integer year;
 	public Integer month;
 	public String yearMonth;
+	
+	
+	public String username;
+	public String nickName;
+	public String mobile;
 	
 	
 	public Integer getBillId() {
@@ -85,7 +90,25 @@ public class Bill {
 	public void setYearMonth(String yearMonth) {
 		this.yearMonth = yearMonth;
 	}
-
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getNickName() {
+		return nickName;
+	}
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+	public String getMobile() {
+		return mobile;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+	
 	
 	
 	

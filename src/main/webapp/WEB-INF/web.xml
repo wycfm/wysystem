@@ -5,7 +5,7 @@
 <web-app>
   <display-name>wysystem</display-name>
   
-  <filter>
+  <!-- <filter>
   	<filter-name>authenLoginFilter</filter-name>
   	<filter-class>cn.wycfm.core.filter.AuthenLoginFilter</filter-class>
   </filter>
@@ -13,7 +13,7 @@
   <filter-mapping>
   	<filter-name>authenLoginFilter</filter-name>
   	<url-pattern>/member/*</url-pattern>
-  </filter-mapping>
+  </filter-mapping> -->
   
   <servlet>
   	<servlet-name>coreAction</servlet-name>
@@ -36,7 +36,13 @@
   	<servlet-name>BillServlet</servlet-name>
   	<display-name>BillServlet</display-name>
   	<description></description>
-  	<servlet-class>cn.wycfm.bill.BillServlet</servlet-class>
+  	<servlet-class>cn.wycfm.bill.servlet.BillServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>AddBillServlet</servlet-name>
+  	<display-name>AddBillServlet</display-name>
+  	<description></description>
+  	<servlet-class>cn.wycfm.bill.servlet.AddBillServlet</servlet-class>
   </servlet>
   
   <servlet-mapping>
@@ -54,7 +60,11 @@
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>BillServlet</servlet-name>
-  	<url-pattern>/BillServlet</url-pattern>
+  	<url-pattern>/bill</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AddBillServlet</servlet-name>
+  	<url-pattern>/AddBillServlet</url-pattern>
   </servlet-mapping>
   
   

@@ -34,6 +34,27 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 		});
 	}
 
+	public User getUser(Integer userId) throws SQLException {
+		
+		String sql = "select user_id,username,nickname,signature,mobile,email from user where user_id=?";
+		Object[] args = new Object[] {userId};
+		int[] argTypes = new int[] {Types.INTEGER};
+		return (User) this.queryForObject(sql, args, argTypes, new ResultSetExtractor<Object>() {
+			public Object extractData(ResultSet rs) throws SQLException {
+				
+				User user = new User();
+				while(rs.next()) {
+					user.setUserId(rs.getInt("user_id"));
+					user.setUserName(rs.getString("username"));
+					user.setNickName(rs.getString("nickname"));
+					user.setSignature(rs.getString("signature"));
+					user.setMobile(rs.getString("mobile"));
+					user.setEmail(rs.getString("email"));
+				}
+				return user;
+			}
+		});
+	}
 	@SuppressWarnings("unchecked")
 	public List<User> listUser(Integer size, Integer offSet) throws SQLException{
 		String sql = "select user_id,username,nickname,signature,mobile,email from user limit ? offset ?";

@@ -20,8 +20,8 @@ public class AuthenLoginFilter implements Filter{
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
 			throws IOException, ServletException {
-		HttpServletRequest req = (HttpServletRequest)request;
-		HttpSession session = req.getSession();
+		//HttpServletRequest req = (HttpServletRequest)request;
+		//HttpSession session = req.getSession();
 		/*if(session.getAttribute("wysystemuser") !=null) {
 			filterChain.doFilter(request, response);
 			return;
