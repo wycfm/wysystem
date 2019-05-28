@@ -1,8 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" import="cn.wycfm.core.util.CoreUtil,cn.wycfm.core.model.User"
     pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+	User user = CoreUtil.getUser(request);
 %>
 <!DOCTYPE html>
 <html>
@@ -31,7 +32,11 @@
      <!-- <ul class="navbar-nav" style="width:100%;">
         <li class="nav-item"><a class="nav-link"></a></li>
       </ul> -->
-      <a class="navbar-brand pull-right" href="javascript:void(0);" data-toggle="modal" data-target="#loginModal" id="doLogin">登陆</a>
+      <%if(user!=null){ %>
+      	<a class="navbar-brand pull-right" href="javascript:void(0);"><%=user.getUserName()%></a>
+       <%}else{ %>
+      		<a class="navbar-brand pull-right" href="javascript:void(0);" data-toggle="modal" data-target="#loginModal" id="doLogin">登陆</a>
+  		<%}%>
   </nav>
 <div class="main">
     <div class="container">
@@ -152,7 +157,7 @@
  
       <!-- 模态框主体 -->
       <div class="modal-body">
-         <form id="loginForm" action="/loginServlet" method="post">
+         <form id="loginForm" action="/login" method="post">
 		    <div class="form-group">
 		      <label for="usr">用户名:</label>
 		      <input type="text" class="form-control" maxlength="36" name="username" id="username" autocomplete="off" placeholder="用户名/手机号">
@@ -169,6 +174,7 @@
 		      </label>
 		    </div>
 		    <div class="form-submit m-auto">
+		    <input type="hidden" name="backUrl" value="/bill">
 		      <button type="button" id="loginSubmit" class="btn btn-primary">登录</button>
 		    </div>
 		    
@@ -206,8 +212,8 @@ $(function(){
 	});
 	
 	$("#loginSubmit").on("click", function(){
-		var _username = $("input [name=username]");
-		var _password = $("input [name=password]");
+		var _username = $("input[name=username]");
+		var _password = $("input[name=password]");
 		var username = _username.val();
 		var password = _password.val();
 		
@@ -219,7 +225,25 @@ $(function(){
 			_password.parent().find(".tip-wrap").show();
 			return ;
 		}
-		$("#loginForm").submit();
+		var d = {
+				username:username,
+				password:password
+		}
+		$.ajax({
+			type:"post",
+			url:"/login",
+			data:d,
+			dataType:"json",
+			cache: false
+		}).done(function(data){
+			console.log(data);
+			if(data.code=="200"){
+				window.location.reload();
+			}else{
+				alert("用户名不存在/密码错误");
+			}
+			
+		});
 	});
 	
 	$("input[name=username]").on("blur",function(){

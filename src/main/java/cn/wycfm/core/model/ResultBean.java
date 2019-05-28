@@ -20,6 +20,22 @@ public class ResultBean<T> {
 	 */
 	public T result;
 	
+	
+	public ResultBean() {}
+	
+	public ResultBean(String code, String status, T result) {
+		this.code = code;
+		this.status = status;
+		this.result = result;
+	}
+	
+	public ResultBean(String code, String status, String description, T result) {
+		this.code = code;
+		this.status = status;
+		this.description = description;
+		this.result = result;
+	}
+	
 	public String getCode() {
 		return code;
 	}

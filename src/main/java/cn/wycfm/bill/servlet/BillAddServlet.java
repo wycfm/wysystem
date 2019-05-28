@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import cn.wycfm.bill.model.Bill;
 import cn.wycfm.bill.service.BillService;
 import cn.wycfm.bill.service.impl.BillServiceImpl;
@@ -53,6 +56,9 @@ public class BillAddServlet extends HttpServlet {
 		BillService billService = new BillServiceImpl();
 		billService.saveBill(bill,user);
 		
+		
+		//Gson gson = new Gson();
+		//String jsonResult = gson.toJson(result, new TypeToken<ResultBean<User>>() {}.getType());
 		response.setContentType("application/json;charset=utf-8");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter writer = null;

@@ -23,7 +23,7 @@ public class CoreUtil {
 	 * @return user
 	 */
 	public static User getUser(HttpServletRequest request) {
-		return (User) request.getAttribute(SITE_KEY);
+		return (User) request.getSession().getAttribute(USER_KEY);
 	}
 	
 	/**
@@ -46,7 +46,7 @@ public class CoreUtil {
 	 * @param user
 	 */
 	public static void setUser(HttpServletRequest request, User user) {
-		request.setAttribute(USER_KEY, user);
+		request.getSession().setAttribute(USER_KEY, user);
 	}
 	
 	/**
@@ -55,7 +55,7 @@ public class CoreUtil {
 	 * @return
 	 */
 	public static Site getSite(HttpServletRequest request) {
-		return (Site) request.getAttribute(SITE_KEY);
+		return (Site) request.getSession().getAttribute(SITE_KEY);
 	}
 	
 	public static Integer getSiteId(HttpServletRequest request) {
@@ -68,6 +68,6 @@ public class CoreUtil {
 	}
 	
 	public static void setSite(HttpServletRequest request, Site site) {
-		request.setAttribute(SITE_KEY, site);
+		request.getSession().setAttribute(SITE_KEY, site);
 	}
 }

@@ -23,7 +23,7 @@ public class CoreServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//super.doGet(req, resp);
-		String requestURI = req.getRequestURI();
+		/*String requestURI = req.getRequestURI();
 		String serverName = req.getServerName();
 		//System.out.println("serverName:"+serverName);
 		log.info("serverName:"+serverName);
@@ -31,8 +31,8 @@ public class CoreServlet extends HttpServlet{
 			req.getRequestDispatcher("/blog").forward(req, resp);
 		}else {
 			req.getRequestDispatcher("/index.html").forward(req, resp);
-		}
-		
+		}*/
+		req.getRequestDispatcher("/WEB-INF/t/www/index/index.jsp").forward(req, resp);
 		
 	}
 	
