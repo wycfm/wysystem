@@ -11,6 +11,7 @@ import cn.wycfm.bill.dao.BillDao;
 import cn.wycfm.bill.dao.impl.BillDaoImpl;
 import cn.wycfm.bill.model.Bill;
 import cn.wycfm.bill.model.BillQuery;
+import cn.wycfm.bill.model.BillResult;
 import cn.wycfm.bill.service.BillService;
 import cn.wycfm.core.model.User;
 
@@ -20,11 +21,27 @@ public class BillServiceImpl implements BillService{
 		return null;
 	}
 
-	public List<Bill> listBill(BillQuery bill, User user) {
+	public List<BillResult> listBill(BillQuery bill, User user) {
+		BillDao billDao = new BillDaoImpl();
+		try {
+			List<BillResult> listBill = billDao.listBill(bill);
+			return listBill;
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
 		return null;
 	}
 	
-	public List<Map<String, String>> listSumBill(String userIds, String yearMonth) {
+	public List<Map<String, String>> listSumBill(BillQuery bill) {
+		BillDao billDao = new BillDaoImpl();
+		try {
+			List<Map<String, String>> result = billDao.listSumBill(bill);
+			return result;
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -32,6 +49,7 @@ public class BillServiceImpl implements BillService{
 		BillDao billDao = new BillDaoImpl();
 		Calendar calendar = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+		
 		try {
 			bill.setUserId(user.getUserId());
 			bill.setInputTime(new Date(System.currentTimeMillis()));

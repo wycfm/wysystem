@@ -23,7 +23,8 @@
 	.color-red{color:#EF1300!important}
 	.tip-wrap{display:none;}
 	.form-submit{display: flex;justify-content: flex-end;}
-</style>	 
+</style>	
+ 
 </head>
 <body>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -110,7 +111,7 @@
 			
 		</div>
 		<div class=table-responsive">
-			<table class="table table-dark table-striped">
+			<table id="data_table" class="table table-dark table-striped">
 			    <thead>
 			      <tr>
 			        <th>昵称</th>
@@ -273,6 +274,23 @@ $(function(){
 		}
 		
 	});
+	
+	
+	$ajax({
+		type:"get",
+		url:"",
+		data:{},
+		cache:false,
+		dataType:"json"
+	}).done(function(datas){
+		
+		
+	}).error(function(errors){
+		alert(errors);
+	});
+	
+	
+	
 });
 </script>
 

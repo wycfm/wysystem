@@ -26,6 +26,10 @@ public class BillServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println(CoreUtil.getUser(request));
+		
+		
+		
+		
 		request.getRequestDispatcher("/WEB-INF/t/bill/bill.jsp").forward(request, response);
 	}
 
