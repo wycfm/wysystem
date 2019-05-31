@@ -23,13 +23,13 @@ import cn.wycfm.core.util.FrontUtils;
 /**
  * Servlet implementation class AddBillServlet
  */
-public class BillAddServlet extends HttpServlet {
+public class BillListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BillAddServlet() {
+    public BillListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

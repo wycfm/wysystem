@@ -1,5 +1,6 @@
 package cn.wycfm.bill.model;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import cn.wycfm.core.model.User;
@@ -7,16 +8,15 @@ import cn.wycfm.core.model.User;
 public class Bill {
 
 	public Integer billId;
-	public Date billDate;
+	public String billDate;
 	public String description;
 	public Double amount;
 	public Integer status;
 	public Integer userId;
-	public Date inputTime;
-	public Date updateTime;
+	public Timestamp inputTime;
+	public Timestamp updateTime;
 	public Integer year;
 	public Integer month;
-	public String yearMonth;
 	
 	
 	public Integer getBillId() {
@@ -25,10 +25,10 @@ public class Bill {
 	public void setBillId(Integer billId) {
 		this.billId = billId;
 	}
-	public Date getBillDate() {
+	public String getBillDate() {
 		return billDate;
 	}
-	public void setBillDate(Date billDate) {
+	public void setBillDate(String billDate) {
 		this.billDate = billDate;
 	}
 	public String getDescription() {
@@ -55,16 +55,16 @@ public class Bill {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-	public Date getInputTime() {
+	public Timestamp getInputTime() {
 		return inputTime;
 	}
-	public void setInputTime(Date inputTime) {
+	public void setInputTime(Timestamp inputTime) {
 		this.inputTime = inputTime;
 	}
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return updateTime;
 	}
-	public void setUpdateTime(Date updateTime) {
+	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
 	}
 	public Integer getYear() {
@@ -79,14 +79,6 @@ public class Bill {
 	public void setMonth(Integer month) {
 		this.month = month;
 	}
-	public String getYearMonth() {
-		return yearMonth;
-	}
-	public void setYearMonth(String yearMonth) {
-		this.yearMonth = yearMonth;
-	}
-
-	
 	
 	
 }

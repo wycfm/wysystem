@@ -78,11 +78,11 @@ public class BillDaoImpl extends BaseDao implements BillDao{
 	}
 	
 	public void saveBill(Bill bill) throws SQLException {
-		String sql = "insert into bill_base(bill_date,description,amount,user_id,input_time,year,month,year_month) values(?,?,?,?,?,?,?,?);";
+		String sql = "insert into bill_base(bill_date,description,amount,user_id,input_time,year,month) values(?,?,?,?,?,?,?);";
 		Object[] args = new Object[] {bill.getBillDate(), bill.getDescription(), bill.getAmount(),
-				bill.getUserId(), bill.getInputTime(), bill.getUpdateTime(), bill.getYear(), bill.getMonth(), bill.getYearMonth()};
+				bill.getUserId(), bill.getInputTime(), bill.getYear(), bill.getMonth()};
 		int[] argTypes = new int[] {Types.VARCHAR, Types.VARCHAR , Types.DOUBLE,
-				Types.INTEGER, Types.TIMESTAMP, Types.INTEGER, Types.INTEGER, Types.VARCHAR};
+				Types.INTEGER, Types.TIMESTAMP, Types.INTEGER, Types.INTEGER};
 		this.executeForUpdate(sql, args, argTypes);
 	}
 

@@ -1,6 +1,7 @@
 package cn.wycfm.bill.service.impl;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -13,6 +14,7 @@ import cn.wycfm.bill.model.Bill;
 import cn.wycfm.bill.model.BillQuery;
 import cn.wycfm.bill.model.BillResult;
 import cn.wycfm.bill.service.BillService;
+import cn.wycfm.core.model.ResultBean;
 import cn.wycfm.core.model.User;
 
 public class BillServiceImpl implements BillService{
@@ -45,21 +47,26 @@ public class BillServiceImpl implements BillService{
 		return null;
 	}
 
-	public void saveBill(Bill bill, User user) {
+	public ResultBean<Integer> saveBill(Bill bill, User user) {
 		BillDao billDao = new BillDaoImpl();
 		Calendar calendar = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
-		
+		ResultBean<Integer> result = new ResultBean<Integer>();
 		try {
 			bill.setUserId(user.getUserId());
-			bill.setInputTime(new Date(System.currentTimeMillis()));
+			bill.setInputTime(new Timestamp(System.currentTimeMillis()));
 			bill.setYear(calendar.get(Calendar.YEAR));
 			bill.setMonth(calendar.get(Calendar.MONTH));
-			bill.setYearMonth(sdf.format(new Date(System.currentTimeMillis())));
 			billDao.saveBill(bill);
+			
+			result.setCode("200");
+			result.setDescription("success");
 		} catch (SQLException e) {
+			result.setCode("500");
+			result.setDescription("error");
 			e.printStackTrace();
 		}
+		return result;
 		
 	}
 

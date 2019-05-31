@@ -24,7 +24,12 @@
 	.tip-wrap{display:none;}
 	.form-submit{display: flex;justify-content: flex-end;}
 </style>	
- 
+ <script  type="text/javascript" >
+ 	var user_id=null;
+ 	<%if(user!=null){ %>
+ 		user_id=<%=user.getUserId()%>;
+ 	<%}%>
+ </script>
 </head>
 <body>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -41,26 +46,33 @@
   </nav>
 <div class="main">
     <div class="container">
-		<form id="billSubmit" action="/bill" method="post" class="form-inline">
+		<form id="billSubmit" action="" method="post" class="form-inline">
 			<table class="table table-light">
 		     
 					<tr>
 					  <th scope="row">时间：</th>
 					  <td>
 						  <input type="text" id="billDate" class="form-control" name="billDate">
+						  <p class="tip-wrap errorHint color-red" data-error-hint="必填">必填</p>
 					  </td>
 					  <td></td>
 					  <td></td>
 					</tr>
 					<tr>
 					  <th scope="row">账单描述：</th>
-					  <td><input type="text" name="description" class="form-control" maxlength="200"></td>
+					  <td>
+					  <input type="text" name="description" class="form-control" maxlength="200">
+					  <p class="tip-wrap errorHint color-red" data-error-hint="必填">必填</p>
+					  </td>
 					  <td></td>
 					  <td></td>
 					</tr>
 					<tr>
 					  <th scope="row">金额：</th>
-					  <td><input type="number" name="amount" class="form-control" maxlength="200"></td>
+					  <td>
+					  <input type="number" name="amount" class="form-control" maxlength="200">
+					  <p class="tip-wrap errorHint color-red" data-error-hint="必填">必填</p>
+					  </td>
 					  <td></td>
 					  <td></td>
 					</tr>
@@ -191,112 +203,11 @@
   </div>
 </div>
 </body>
-<script type="text/javascript">
-$(function(){
-	//时间选择器初始化
-	$('#billDate').datetimepicker({
-		format: 'yyyy-mm-dd',
-		startView:2, 
-		minView:2,
-		autoclose:true,
-		language: 'zh-CN' 
-		
-	});
-	
-	$("#yearmonthSelect").datetimepicker({
-		format:"yyyy-mm",
-		startView:3, 
-		minView:3,
-		autoclose:true,
-		language:"zh-CN"
-		
-	});
-	
-	$("#loginSubmit").on("click", function(){
-		var _username = $("input[name=username]");
-		var _password = $("input[name=password]");
-		var username = _username.val();
-		var password = _password.val();
-		
-		if(username==null || username=="" || !_username.attr("validate")){
-			_username.parent().find(".tip-wrap").show();
-			return ;
-		}
-		if(_password==null || _password=="" || !_password.attr("validate")){
-			_password.parent().find(".tip-wrap").show();
-			return ;
-		}
-		var d = {
-				username:username,
-				password:password
-		}
-		$.ajax({
-			type:"post",
-			url:"/login",
-			data:d,
-			dataType:"json",
-			cache: false
-		}).done(function(data){
-			console.log(data);
-			if(data.code=="200"){
-				window.location.reload();
-			}else{
-				alert("用户名不存在/密码错误");
-			}
-			
-		});
-	});
-	
-	$("input[name=username]").on("blur",function(){
-		var _this = $(this);
-		var v = _this.val();
-		var reg = /(^1[3,5,8]\d{9}$)|(^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$)|(^\w+$)/;
-		if(!reg.test(v)){
-			_this.parent().find(".tip-wrap").show();
-			_this.attr("validate","false");
-		}else{
-			_this.parent().find(".tip-wrap").hide();
-			_this.attr("validate","true");
-		}
-		
-	});
-	
-	$("input[name=password]").on("blur",function(){
-		var _this = $(this);
-		var v = _this.val();
-		var reg = /\s/;
-		if(reg.test(v) || v.length < 6){
-			_this.parent().find(".tip-wrap").show();
-			_this.attr("validate","false");
-		}else{
-			_this.parent().find(".tip-wrap").hide();
-			_this.attr("validate","true");
-		}
-		
-	});
-	
-	
-	$ajax({
-		type:"get",
-		url:"",
-		data:{},
-		cache:false,
-		dataType:"json"
-	}).done(function(datas){
-		
-		
-	}).error(function(errors){
-		alert(errors);
-	});
-	
-	
-	
-});
-</script>
 
 
     <!-- Include all compiled plugins (below), or include individual files as needed -->
  <script src="/js/bootstrap.js"></script>
  <script src="/js/bootstrap-datetimepicker.js"></script>
  <script src="/js/bootstrap-datetimepicker.zh-CN.js"></script>
+ <script src="/js/bill/bill.js"></script>
 </html>

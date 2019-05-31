@@ -42,7 +42,7 @@
   	<servlet-name>AddBillServlet</servlet-name>
   	<display-name>AddBillServlet</display-name>
   	<description></description>
-  	<servlet-class>cn.wycfm.bill.servlet.AddBillServlet</servlet-class>
+  	<servlet-class>cn.wycfm.bill.servlet.BillAddServlet</servlet-class>
   </servlet>
   <servlet>
   	<servlet-name>LoginServlet</servlet-name>
@@ -70,7 +70,7 @@
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>AddBillServlet</servlet-name>
-  	<url-pattern>/AddBillServlet</url-pattern>
+  	<url-pattern>/addBill</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>LoginServlet</servlet-name>
