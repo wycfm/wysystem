@@ -14,6 +14,32 @@ public class FrontUtils {
 
 	public static <T> void resultResponse(HttpServletResponse response, ResultBean<T> result) {
 		
+		result.setCode("200");
+		result.setStatus("success");
+		Gson gson = new Gson();
+		String jsonResult = gson.toJson(result, new TypeToken<ResultBean<Object>>() {}.getType());
+		response.setContentType("application/json;charset=utf-8");
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter writer = null;
+		try {
+			writer = response.getWriter();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		writer.write(jsonResult);
+		writer.close();
+	}
+	
+	
+	
+	public static <T> void errorResponse(HttpServletResponse response, String message) {
+		
+		ResultBean<String> result = new ResultBean<String>(); 
+		result.setCode("400");
+		result.setStatus(message);
+		result.setDescription(message);
+		result.setResult(null);
+		
 		Gson gson = new Gson();
 		String jsonResult = gson.toJson(result, new TypeToken<ResultBean<Object>>() {}.getType());
 		response.setContentType("application/json;charset=utf-8");

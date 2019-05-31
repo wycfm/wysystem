@@ -12,7 +12,10 @@ $(function(){
 	
 	//-------bill table submit----
 	$("#billSubmit").submit(function(datas) { 
-		if(!user_id){return false;}
+		if(!user_id){
+			$("#no_login_alert").show();
+			return false;
+		}
 		var _billDate = $("input[name=billDate]");
 		var _desc = $("input[name=description]");
 		var _amount = $("input[name=amount]");
@@ -48,54 +51,35 @@ $(function(){
 		});
 		return false;
 	});
-	/*$("#billSubmit").on("click", function(){
-		var _billDate = $("input[name=billDate]");
-		var _desc = $("input[name=description]");
-		var _amount = $("input[name=amount]");
-		var billDateV = _billDate.val();
-		var descV = _desc.val();
-		var amountV = _amount.val();
-		if(!billDateV || !descV || !amountV){
-			_billDate.parent().find(".tip-wrap").show();
-			_desc.parent().find(".tip-wrap").show();
-			_amount.parent().find(".tip-wrap").show();
-			return ;
-		}
-		var d = {
-				billDate:billDateV,
-				description:descV,
-				amount:amountV
-		}
-		$.ajax({
-			type:"post",
-			url:"/addBill",
-			data:d,
-			dataType:"json",
-			cache: false
-		}).done(function(data){
-			console.log(data);
-			if(data.code=="200"){
-				alert("添加成功");
-				window.location.reload();
-			}else{
-				alert("提交错误");
-			}
-			
-		});
-	});*/
 	
 	
 	
+	var currentDate = new Date();
+	currentDate.setDate(1);
+	var monthFirstDay = jQuery.formatter(currentDate,"yyyy-MM-dd");
 	
 	
-	$("#yearmonthSelect").datetimepicker({
-		format:"yyyy-mm",
-		startView:3, 
-		minView:3,
+	$("#startDate").datetimepicker({
+		format:"yyyy-mm-dd",
+		startView:2, 
+		minView:2,
+		initialDate:monthFirstDay,
 		autoclose:true,
 		language:"zh-CN"
 		
 	});
+	$("#startDate").find("input").val(monthFirstDay);
+	
+	$("#endDate").datetimepicker({
+		format:"yyyy-mm-dd",
+		startView:2, 
+		minView:2,
+		endDate:new Date(),
+		autoclose:true,
+		language:"zh-CN"
+		
+	});
+	$("#endDate").find("input").val(jQuery.formatter(new Date(),"yyyy-MM-dd"));
 	
 	
 	//---登陆------
@@ -162,25 +146,132 @@ $(function(){
 		
 	});
 	
-	
-	
-	
-	
-	
-	/*
-	$.ajax({
-		type:"get",
-		url:"",
-		data:{},
-		cache:false,
-		dataType:"json"
-	}).done(function(datas){
-		
-		
-	}).error(function(errors){
-		alert(errors);
+	$("#loadData").on("click",function(){
+		if(!user_id){
+			$("#no_login_alert").show();
+		}
+		initBillDatas(getQueryParams());
 	});
-	*/
+	
+	function getQueryParams(){
+		var params = {};
+		params.startDate = $("#startDate").find("input").val();
+		params.endDate = $("#endDate").find("input").val();
+		params.userIds = $("#userSelect").val();
+		console.log(params);
+		return params;
+	}
+	
+	if(user_id && user_id>0){
+		
+		initBillDatas(getQueryParams());
+	}
+	
+	function initBillDatas(d){
+		
+		var d = {
+			startDate:d.startDate,
+			endDate:d.endDate,
+			userIds:d.userIds
+			
+		};
+		$.ajax({
+			type:"get",
+			url:"/listBill",
+			data:d,
+			cache:false,
+			dataType:"json"
+		}).done(function(datas){
+			if(datas && datas.code=="200"){
+				initBillTable(datas.result);
+			}else{
+				alert("error~~");
+			}
+		}).fail(function(errors){
+			alert(errors);
+		});
+	}
+	
+	
+	function initBillTable(datas){
+		
+		if(datas && datas.length > 0){
+			var htmlArr = ['<thead>',
+			      '<tr>',
+			        '<th>昵称</th>',
+			        '<th>时间</th>',
+			        '<th>账单描述</th>',
+			        '<th>金额</th>',
+			      '</tr>',
+			    '</thead>'];
+			for(var i=0; i < datas.length; i++){
+				var data = datas[i];
+				var trHtml = ['<tr>'];
+				trHtml.push('<td>',data.nickName,'</td>');
+				trHtml.push('<td>',data.billDate,'</td>');
+				trHtml.push('<td>',data.description,'</td>');
+				trHtml.push('<td>',data.amount,'</td>');
+				trHtml.push('</tr>');
+				htmlArr.push(trHtml.join(''));
+			}
+			$("#dataTable").html(htmlArr.join(''));
+		}else{
+			$("#dataTable").html('无数据');
+		}
+		
+	}
 	
 	
 });
+/**日期格式化*/
+jQuery.formatter = function(dt,format,languageLables){ 
+      if(typeof dt=="undefined" || dt==""){
+	    return "";
+      }
+  if(typeof dt=="string"){
+	    if(isNaN(dt-0)){    		
+		    dt=$.parseDate(dt);    		
+	    }else{    		 
+		    if(dt.length==8){
+			    var yearstr=dt.substring(0,4);    			
+			    var monstr=dt.substring(4,6);
+			    var daystr=dt.substring(6,8);
+			    var fullStr=yearstr+"-"+monstr+"-"+daystr;
+			    dt=$.parseDate(fullStr);
+		    }    		
+	    }
+   }
+   languageLables=languageLables?languageLables:{};
+   if(!languageLables.months){
+ 	languageLables.months= ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+   }
+   if(!languageLables.weekDays){
+ 	languageLables.weekDays=["SUNDAY","MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY"];
+   }
+   
+   var o =
+   {
+     "M+" : dt.getMonth()+1, //month
+     "d+" : dt.getDate(),    //day
+     "h+" : dt.getHours(),   //hour
+     "m+" : dt.getMinutes(), //minute
+     "s+" : dt.getSeconds(), //second,           
+     "q+" : Math.floor((dt.getMonth()+3)/3),  //quarter
+     "S" : dt.getMilliseconds() //millisecond           
+   }
+
+   for(var k in o)
+   if(new RegExp("("+ k +")").test(format))
+   format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+ 
+   if(/(y+)/.test(format))
+   format=format.replace(RegExp.$1,(dt.getFullYear()+"").substr(4 - RegExp.$1.length));
+
+   if(/(w)/.test(format))
+   format=format.replace(RegExp.$1,languageLables.weekDays[dt.getDay()]);        
+ 
+   if(/(E)/.test(format))
+   format=format.replace(RegExp.$1,languageLables.months[dt.getMonth()]);
+ 
+   return format;
+ }

@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +25,12 @@ public class BillServiceImpl implements BillService{
 	public List<BillResult> listBill(BillQuery bill, User user) {
 		BillDao billDao = new BillDaoImpl();
 		try {
+			if(bill!=null) {
+				String userIds = bill.getUserIds();
+				if("-1".equals(userIds)) {
+					bill.setUserIds("5,10,11");
+				}
+			}
 			List<BillResult> listBill = billDao.listBill(bill);
 			return listBill;
 		} catch (SQLException e) {
@@ -38,6 +43,12 @@ public class BillServiceImpl implements BillService{
 	public List<Map<String, String>> listSumBill(BillQuery bill) {
 		BillDao billDao = new BillDaoImpl();
 		try {
+			if(bill!=null) {
+				String userIds = bill.getUserIds();
+				if("-1".equals(userIds)) {
+					bill.setUserIds("5,10,11");
+				}
+			}
 			List<Map<String, String>> result = billDao.listSumBill(bill);
 			return result;
 		} catch (SQLException e) {

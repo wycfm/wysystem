@@ -52,7 +52,7 @@
 					<tr>
 					  <th scope="row">时间：</th>
 					  <td>
-						  <input type="text" id="billDate" class="form-control" name="billDate">
+						  <input type="text" id="billDate" class="form-control" autocomplete="off" name="billDate">
 						  <p class="tip-wrap errorHint color-red" data-error-hint="必填">必填</p>
 					  </td>
 					  <td></td>
@@ -61,7 +61,7 @@
 					<tr>
 					  <th scope="row">账单描述：</th>
 					  <td>
-					  <input type="text" name="description" class="form-control" maxlength="200">
+					  <input type="text" name="description" class="form-control" autocomplete="off" maxlength="200">
 					  <p class="tip-wrap errorHint color-red" data-error-hint="必填">必填</p>
 					  </td>
 					  <td></td>
@@ -70,7 +70,7 @@
 					<tr>
 					  <th scope="row">金额：</th>
 					  <td>
-					  <input type="number" name="amount" class="form-control" maxlength="200">
+					  <input type="number" name="amount" class="form-control" autocomplete="off" maxlength="200">
 					  <p class="tip-wrap errorHint color-red" data-error-hint="必填">必填</p>
 					  </td>
 					  <td></td>
@@ -87,33 +87,50 @@
 			</table>
 		</form>
 		<div class="row m-auto">
-			<div class="col">
+			<div id="no_login_alert" style="display:none;"
+				class="col-sm-12 alert alert-danger alert-dismissible fade show">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<strong>请登录！</strong>
+			</div>
+		</div>
+		<div class="row m-auto">
+			<div class="col-sm-3">
 				<div class="row">
 					<span>时间：</span>
-					<div class="input-append date" id="yearmonthSelect"  data-date-format="yyyy-mm">
-					    <input class="span2" size="16" type="text" >
+					<div class="input-append date" id="startDate" data-date="" data-date-format="yyyy-mm-dd">
+					    <input class="span2" size="16" type="text" readonly >
 					    <span class="add-on"><i class="icon-remove"></i></span>
 					    <span class="add-on"><i class="icon-th"></i></span>
 					</div>  
 				</div>  
 			</div>
-			<div class="col">
+			<div class="col-sm-3">
+				<div class="row">
+					<span>时间：</span>
+					<div class="input-append date" id="endDate" data-date="" data-date-format="yyyy-mm-dd">
+					    <input class="span2" size="16" type="text" readonly >
+					    <span class="add-on"><i class="icon-remove"></i></span>
+					    <span class="add-on"><i class="icon-th"></i></span>
+					</div>  
+				</div>  
+			</div>
+			<div class="col-sm-3">
 				<div class="row ">
-					<span class="m-1">用户：</span>
-					<div class="form-check m-1">
-					  <label class="form-check-label">
-					    <input type="checkbox" class="form-check-input" value="1">吴
-					  </label>
+				      <select class="form-control" id="userSelect">
+				        <option value="-1">全部</option>
+				        <option value="5">wu</option>
+				        <option value="10">gao</option>
+				        <option value="11">gu</option>
+				      </select>
+				</div>
+			</div>
+			
+			<div class="col-sm-3">
+				<div class="row text-center">
+					<div class="col-md-6 col-md-offset-3">
 					</div>
-					<div class="form-check m-1">
-					  <label class="form-check-label">
-					    <input type="checkbox" class="form-check-input" value="2">高
-					  </label>
-					</div>
-					<div class="form-check m-1">
-					  <label class="form-check-label">
-					    <input type="checkbox" class="form-check-input" value="3">古
-					  </label>
+					<div class="col-md-6">
+					<button type="button" id="loadData" class="btn btn-primary">加载数据</button>
 					</div>
 				</div>
 			</div>
@@ -123,7 +140,7 @@
 			
 		</div>
 		<div class=table-responsive">
-			<table id="data_table" class="table table-dark table-striped">
+			<table id="dataTable" class="table table-dark table-striped">
 			    <thead>
 			      <tr>
 			        <th>昵称</th>
@@ -132,7 +149,7 @@
 			        <th>金额</th>
 			      </tr>
 			    </thead>
-			    <tbody>
+			    <!-- <tbody>
 			      <tr>
 			        <td>John</td>
 			        <td>Doe</td>
@@ -151,7 +168,7 @@
 			        <td>john@example.com</td>
 			        <td>John</td>
 			      </tr>
-			    </tbody>
+			    </tbody> -->
 			</table>
 		</div>
 	</div>
@@ -196,12 +213,18 @@
  
       <!-- 模态框底部 -->
       <div class="modal-footer">
-        
+      	
       </div>
  
     </div>
   </div>
 </div>
+	
+	<div id="success_alert"  style="display:none;"
+		class="alert alert-success alert-dismissible fade show">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<strong>成功!</strong>
+	</div>
 </body>
 
 

@@ -24,11 +24,11 @@ public class BillDaoImpl extends BaseDao implements BillDao{
 	@SuppressWarnings("unchecked")
 	public List<BillResult> listBill(BillQuery bill) throws SQLException {
 		StringBuilder sql = new StringBuilder();
-		sql.append("select b.bill_id,b.bill_date,b.description,b.amount,b.user_id,b.input_time,b.year,b.month,b.year_month, ")
-		.append(" u.username,u.mobile, u.nick_name ")
+		sql.append("select b.bill_id,b.bill_date,b.description,b.amount,b.user_id,b.input_time,b.year,b.month, ")
+		.append(" u.username,u.mobile, u.nickname ")
 		.append(" from bill_base b ")
 		.append(" inner join user u on u.user_id=b.user_id ")
-		.append(" where bill_date>=? and bill_date<=? and user_id in (?) ");
+		.append(" where b.bill_date>=? and b.bill_date<=? and b.user_id in (?) ");
 		
 		Object[] args = new Object[] {bill.getStartDate(), bill.getEndDate(), bill.getUserIds()};
 		int[] argTypes = new int[] {Types.DATE, Types.DATE, Types.VARCHAR};
@@ -44,10 +44,9 @@ public class BillDaoImpl extends BaseDao implements BillDao{
 				bq.setInputTime(rs.getDate("input_time"));
 				bq.setYear(rs.getInt("year"));
 				bq.setMonth(rs.getInt("month"));
-				bq.setYearMonth(rs.getString("year_month"));
 				bq.setUsername(rs.getString("username"));
 				bq.setMobile(rs.getString("mobile"));
-				bq.setNickName(rs.getString("nick_name"));
+				bq.setNickName(rs.getString("nickname"));
 				
 				return bq;
 			}
