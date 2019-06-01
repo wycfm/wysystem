@@ -11,7 +11,12 @@ $(function(){
 	
 	
 	//-------bill table submit----
+	var isSubmit = false;
 	$("#billSubmit").submit(function(datas) { 
+		if(isSubmit){
+			return false;
+		}
+		isSubmit = true;
 		if(!user_id){
 			$("#no_login_alert").show();
 			return false;
@@ -26,6 +31,7 @@ $(function(){
 			_billDate.parent().parent().find(".tip-wrap").show();
 			_desc.parent().parent().find(".tip-wrap").show();
 			_amount.parent().parent().find(".tip-wrap").show();
+			isSubmit = false;
 			return false;
 		}
 		var d = {
@@ -33,6 +39,7 @@ $(function(){
 				description:descV,
 				amount:amountV
 		}
+		
 		$.ajax({
 			type:"post",
 			url:"/addBill",
@@ -42,9 +49,13 @@ $(function(){
 		}).done(function(data){
 			console.log(data);
 			if(data.code=="200"){
+				isSubmit = false;
 				alert("添加成功");
 				window.location.reload();
+			}else if(datas && datas.code=="400"){
+				alert(datas.status);
 			}else{
+				isSubmit = false;
 				alert("提交错误");
 			}
 			
@@ -64,6 +75,7 @@ $(function(){
 		startView:2, 
 		minView:2,
 		initialDate:monthFirstDay,
+		endDate:new Date(),
 		autoclose:true,
 		language:"zh-CN"
 		
@@ -111,7 +123,8 @@ $(function(){
 			console.log(data);
 			if(data.code=="200"){
 				window.location.reload();
-			}else{
+			}
+			else{
 				alert("用户名不存在/密码错误");
 			}
 			
@@ -184,6 +197,11 @@ $(function(){
 		}).done(function(datas){
 			if(datas && datas.code=="200"){
 				initBillTable(datas.result);
+			}else if(datas && datas.code=="400"){
+				alert(datas.status);
+				if(datas.status=="noLogin"){
+					window.location.reload();
+				}
 			}else{
 				alert("error~~");
 			}
@@ -202,6 +220,7 @@ $(function(){
 			        '<th>时间</th>',
 			        '<th>账单描述</th>',
 			        '<th>金额</th>',
+			        '<th>操作</th>',
 			      '</tr>',
 			    '</thead>'];
 			for(var i=0; i < datas.length; i++){
@@ -211,6 +230,11 @@ $(function(){
 				trHtml.push('<td>',data.billDate,'</td>');
 				trHtml.push('<td>',data.description,'</td>');
 				trHtml.push('<td>',data.amount,'</td>');
+				trHtml.push('<td>');
+				if(user_id == data.userId){
+					trHtml.push('<a href="javascript:void(0);" class="billDelete" bill_id="',data.billId,'">删除</a>');
+				}
+				trHtml.push('</td>');
 				trHtml.push('</tr>');
 				htmlArr.push(trHtml.join(''));
 			}
@@ -221,6 +245,93 @@ $(function(){
 		
 	}
 	
+
+	$("table").on("click",".billDelete",function(){
+		var _this = $(this);
+		var billId = _this.attr("bill_id");
+		var btn = $("#show-delete-dialog-button");
+		btn.click();
+		$("#delete-sure").off("click").on("click",function(){
+			//console.log(billId);
+			deleteBill(billId);
+		});
+		return false;
+	});
+	function deleteBill(billId){
+		$.ajax({
+			type:"post",
+			url:"/deleteBill",
+			data:{billId:billId},
+			cache:false,
+			dataType:"json"
+		}).done(function(datas){
+			if(datas && datas.code=="200"){
+				alert("删除成功");
+				initBillDatas(getQueryParams());
+			}else if(datas && datas.code=="400"){
+				alert(datas.status);
+				if(datas.status=="noLogin"){
+					window.location.reload();
+				}
+			}
+			else{
+				alert("error~");
+			}
+		}).fail(function(e){
+			alert(e);
+		});
+	}
+	
+	$("#count-button").on("click",function(){
+		if(user_id>0){
+			countBillDatas(getQueryParams());	
+		}
+		
+	});
+	
+	function countBillDatas(d){
+		
+		var d = {
+			startDate:d.startDate,
+			endDate:d.endDate,
+			userIds:d.userIds
+			
+		};
+		$.ajax({
+			type:"get",
+			url:"/sumBill",
+			data:d,
+			cache:false,
+			dataType:"json"
+		}).done(function(datas){
+			if(datas && datas.code=="200"){
+				initCountResult(datas.result);
+			}else if(datas && datas.code=="400"){
+				alert(datas.status);
+				if(datas.status=="noLogin"){
+					window.location.reload();
+				}
+			}else{
+				alert("error~~");
+			}
+		}).fail(function(errors){
+			alert(errors);
+		});
+	}
+	function initCountResult(datas){
+		if(datas && datas.length > 0){
+			var htmlArr = [];
+			var allTotal = 0;
+			for(var i=0; i < datas.length; i++){
+				var data = datas[i];
+				allTotal = parseFloat(allTotal)+parseFloat(data.total);
+				htmlArr.push(data.nickName+":"+Number(data.total)+"&nbsp;&nbsp;");
+			}
+			$("#count-show").html("总金额："+allTotal+"&nbsp;&nbsp;"+htmlArr.join('')+"&nbsp;&nbsp;&nbsp;平均："+parseFloat(allTotal/datas.length));
+		}else{
+			$("#count-show").html('无数据');
+		}
+	}
 	
 });
 /**日期格式化*/

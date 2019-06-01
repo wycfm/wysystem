@@ -1,9 +1,6 @@
 package cn.wycfm.bill.model;
 
 import java.sql.Timestamp;
-import java.util.Date;
-
-import cn.wycfm.core.model.User;
 
 public class Bill {
 

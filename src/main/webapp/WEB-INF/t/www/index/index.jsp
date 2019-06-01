@@ -29,10 +29,10 @@
   <body>
 
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-      <a class="navbar-brand" href="index.html">倾听~博客</a>
+      <a class="navbar-brand" href="/">倾听~博客</a>
       <ul class="navbar-nav">
-        <li class="nav-item active"><a class="nav-link" href="#">首页</a></li>
-        <li class="nav-item"><a class="nav-link" href="technology.html">技术</a></li>
+        <li class="nav-item active"><a class="nav-link" href="/">首页</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">技术</a></li>
         <li class="nav-item"><a class="nav-link" href="#life">生活</a></li>
         <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
         <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
@@ -41,7 +41,7 @@
    <div class="blog-header">
    	<div class="container">
         <h1 class="blog-title">首页</h1>
-        <p class="lead blog-description">倾听雨落，品味生活！</p>
+        <p class="lead blog-description">倾听雨落~</p>
     </div>
   </div>
    <div class="main">
@@ -50,56 +50,47 @@
       <div class="row">
       <div class="col-8 bolg-main">
       	<div class="content-item">
-      		<h3>java servlet 简介</h3>
+      		<h3>linux centos7 tomcat8 配置成服务启动</h3>
       		<hr>
       		<p class="content-item-desc">
-      			java servlet 简介 servlet 的生命周期，java servlet 简介 servlet 的生命周期，java servlet 简介 servlet 的生命周期，java servlet 简介 servlet 的生命周期
-						<a class="btn" href="#">查看更多 »</a>
+      			 linux centos7 tomcat8 配置成服务启动.
+						<a class="btn" href="/content/1001.html">查看更多 »</a>
 					</p>
 					<div class="content-item-meta"><a href="#">wuyan</a>&nbsp;发布于&nbsp;2017-10-18 <span>阅读(368)</span> 标签：<span>技术</span></div>
       	</div>
       	<div class="content-item">
-      		<h3>java servlet 简介</h3>
+      		<h3>postgresql update from</h3>
       		<hr>
       		<p class="content-item-desc">
-      			java servlet 简介 servlet 的生命周期，java servlet 简介 servlet 的生命周期，java servlet 简介 servlet 的生命周期，java servlet 简介 servlet 的生命周期
-						<a class="btn" href="#">查看更多 »</a>
+      			 1，update from 关联表的更新 update table a set name=b.name from table B b where a.id=b.id; update test set info=tmp.info from (values (1,'new1'),(2,'new2')
+						<a class="btn" href="/content/1002.html">查看更多 »</a>
 					</p>
 					<div class="content-item-meta"><a href="#">wuyan</a>&nbsp;发布于&nbsp;2017-10-18 <span>阅读(368)</span> 标签：<span>技术</span></div>
       	</div>
       	<div class="content-item">
-      		<h3>java servlet 简介</h3>
+      		<h3>Java对Redis基本使用</h3>
       		<hr>
       		<p class="content-item-desc">
-      			java servlet 简介 servlet 的生命周期，java servlet 简介 servlet 的生命周期，java servlet 简介 servlet 的生命周期，java servlet 简介 servlet 的生命周期
-						<a class="btn" href="#">查看更多 »</a>
+      			 java是通过Jedis对redis的基本操作
+						<a class="btn" href="/content/1003.html">查看更多 »</a>
 					</p>
 					<div class="content-item-meta"><a href="#">wuyan</a>&nbsp;发布于&nbsp;2017-10-18 <span>阅读(368)</span> 标签：<span>技术</span></div>
       	</div>
       	<div class="content-item">
-      		<h3>java servlet 简介</h3>
+      		<h3>maven基本基础知识及命令学习-1</h3>
       		<hr>
       		<p class="content-item-desc">
-      			java servlet 简介 servlet 的生命周期，java servlet 简介 servlet 的生命周期，java servlet 简介 servlet 的生命周期，java servlet 简介 servlet 的生命周期
-						<a class="btn" href="#">查看更多 »</a>
+      			maven基本基础知识及命令学习-1
+						<a class="btn" href="/content/1004.html">查看更多 »</a>
 					</p>
 					<div class="content-item-meta"><a href="#">wuyan</a>&nbsp;发布于&nbsp;2017-10-18 <span>阅读(368)</span> 标签：<span>技术</span></div>
       	</div>
       	<div class="content-item">
-      		<h3>java servlet 简介</h3>
+      		<h3>Redis基本认识和基础学习-基本命令</h3>
       		<hr>
       		<p class="content-item-desc">
-      			java servlet 简介 servlet 的生命周期，java servlet 简介 servlet 的生命周期，java servlet 简介 servlet 的生命周期，java servlet 简介 servlet 的生命周期
-						<a class="btn" href="#">查看更多 »</a>
-					</p>
-					<div class="content-item-meta"><a href="#">wuyan</a>&nbsp;发布于&nbsp;2017-10-18 <span>阅读(368)</span> 标签：<span>技术</span></div>
-      	</div>
-      	<div class="content-item">
-      		<h3>java servlet 简介</h3>
-      		<hr>
-      		<p class="content-item-desc">
-      			java servlet 简介 servlet 的生命周期，java servlet 简介 servlet 的生命周期，java servlet 简介 servlet 的生命周期，java servlet 简介 servlet 的生命周期
-						<a class="btn" href="#">查看更多 »</a>
+      			redis 初步学习和简单命令的使用 REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。 Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。 它通常被称为数据结构服务器，因为值（value）可以是 字符串(String), 哈希(Map), 列表(list), 集合(sets) 和 有序集合(sorted sets)等类型。
+						<a class="btn" href="/content/1005.html">查看更多 »</a>
 					</p>
 					<div class="content-item-meta"><a href="#">wuyan</a>&nbsp;发布于&nbsp;2017-10-18 <span>阅读(368)</span> 标签：<span>技术</span></div>
       	</div>
@@ -109,9 +100,9 @@
       	<div class="sidebar-module-introduce">
       		<h4>个人介绍</h4>
       		<ul class="list-unstyled">
-      			<li>wuyan</li>
-      			<li>nan</li>
-      			<li>毕业于郑州大学毕业于郑州大学毕业于郑州大学</li>
+      			<li>无言</li>
+      			<li>男</li>
+      			<li>毕业于郑州大学</li>
       		</ul>
       	</div>
       	<div class="sidebar-module">

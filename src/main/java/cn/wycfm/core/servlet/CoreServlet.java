@@ -7,11 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
-
 public class CoreServlet extends HttpServlet{
 	
-	private static Logger log = Logger.getLogger(CoreServlet.class);
+	//private static Logger log = Logger.getLogger(CoreServlet.class);
 	
 	public final static String BLOG_SERVER_HOST = "blog.wycfm.com";
 	/**
@@ -22,7 +20,7 @@ public class CoreServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//super.doGet(req, resp);
+		super.doGet(req, resp);
 		/*String requestURI = req.getRequestURI();
 		String serverName = req.getServerName();
 		//System.out.println("serverName:"+serverName);
@@ -33,14 +31,13 @@ public class CoreServlet extends HttpServlet{
 			req.getRequestDispatcher("/index.html").forward(req, resp);
 		}*/
 		req.getRequestDispatcher("/WEB-INF/t/www/index/index.jsp").forward(req, resp);
-		
+		return;
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doPost(req, resp);
-		System.out.println("post post");
+		
+		doGet(req, resp);
 	}
 	
 }

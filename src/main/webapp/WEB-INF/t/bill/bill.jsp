@@ -52,7 +52,7 @@
 					<tr>
 					  <th scope="row">时间：</th>
 					  <td>
-						  <input type="text" id="billDate" class="form-control" autocomplete="off" name="billDate">
+						  <input type="text" id="billDate" class="form-control" autocomplete="off" name="billDate" readonly>
 						  <p class="tip-wrap errorHint color-red" data-error-hint="必填">必填</p>
 					  </td>
 					  <td></td>
@@ -139,7 +139,7 @@
 		<div class="row " style="height:20px;">
 			
 		</div>
-		<div class=table-responsive">
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-dark table-striped">
 			    <thead>
 			      <tr>
@@ -170,6 +170,20 @@
 			      </tr>
 			    </tbody> -->
 			</table>
+		</div>
+		<div class="row">
+			<div class="col-sm-1">
+				<button type="button" id="count-button" class="btn btn-primary">计算</button>
+			</div>
+			<div class="col-sm-5 m-auto" id="count-show">
+				
+			</div>
+			<div class="col-sm-3">
+				
+			</div>
+			<div class="col-sm-3">
+				
+			</div>
 		</div>
 	</div>
 </div>
@@ -219,6 +233,33 @@
     </div>
   </div>
 </div>
+
+<button style="display:none" id="show-delete-dialog-button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteDialog"></button>
+<div class="modal fade" id="deleteDialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+ 
+      <!-- 模态框头部 -->
+      <div class="modal-header">
+        <h4 class="modal-title">删除</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+ 
+      <!-- 模态框主体 -->
+      <div class="modal-body">
+     	确定删除吗？
+      </div>
+ 
+      <!-- 模态框底部 -->
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-secondary" id="delete-sure" data-dismiss="modal">确定</button>
+        <button type="button" class="btn btn-secondary" id="delete-colse" data-dismiss="modal">关闭</button>
+      </div>
+ 
+    </div>
+  </div>
+</div>
+
 	
 	<div id="success_alert"  style="display:none;"
 		class="alert alert-success alert-dismissible fade show">

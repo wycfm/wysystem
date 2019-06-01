@@ -31,6 +31,7 @@ public class BillServlet extends HttpServlet {
 		
 		
 		request.getRequestDispatcher("/WEB-INF/t/bill/bill.jsp").forward(request, response);
+		return ;
 	}
 
 	/**

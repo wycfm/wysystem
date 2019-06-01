@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Java对Redis基本使用</title>
+	<meta name="keywords" content="倾听，倾听~博客，Java对Redis基本使用， Redis的使用， java操作redis" />
+    <meta name="description" content="Java对Redis基本使用， Redis的使用， java操作redis" />
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.css" rel="stylesheet">
+    <link href="/css/main.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+   <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+      <a class="navbar-brand" href="/">倾听~博客</a>
+      <ul class="navbar-nav">
+        <li class="nav-item active"><a class="nav-link" href="/">首页</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">技术</a></li>
+        <li class="nav-item"><a class="nav-link" href="#life">生活</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+      </ul>
+  </nav>
+   <div class="main">
+    <div class="container">
+    	
+      <div class="row">
+      <div class="col-sm-12">
+      	<div class="content">
+      		<h2>Java对Redis基本使用</h2>
+      		<hr>
+      		<div class="content-text">
+      			<p><strong>1 引入jar包</strong></p>
+<p>　　java是通过Jedis对redis进行操作的，首先引入jedis.jar</p>
+<p> 　　&lt;dependency&gt;<br />    	　　　　&lt;groupId&gt;redis.clients&lt;/groupId&gt;<br />    	　　　　&lt;artifactId&gt;jedis&lt;/artifactId&gt;<br />    	　　　　&lt;version&gt;2.9.0&lt;/version&gt;<br /> 　　&lt;/dependency&gt;</p>
+<p><br /><strong>2 建立redis连接池</strong></p>
+<p><strong>　　</strong></p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:java;gutter:true;">import java.util.ArrayList;
+import java.util.List;
+
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.JedisShardInfo;
+import redis.clients.jedis.ShardedJedis;
+import redis.clients.jedis.ShardedJedisPool;
+
+public class RedisPool {
+	
+	// 非切片客户端链接对象
+	private Jedis jedis;
+	// 非切片链接池对象
+	private JedisPool jedisPool;
+	// 切片客户端链接对象
+	private ShardedJedis shardedJedis;
+	// 切片链接池
+	private ShardedJedisPool shardedJedisPool;
+	
+	private String ip = "127.0.0.1";
+	private int port = 6379;
+
+	public RedisPool(){
+		initializePool();
+		initializeShardedPool();
+		setJedis(jedisPool.getResource());
+		setShardedJedis(shardedJedisPool.getResource());
+	}
+	
+	public RedisPool(String ip){
+		this.ip = ip;
+		initializePool();
+		initializeShardedPool();
+		setJedis(jedisPool.getResource());
+		setShardedJedis(shardedJedisPool.getResource());
+	}
+	
+	public RedisPool(String ip, int port){
+		this.ip = ip;
+		this.port = port;
+		initializePool();
+		initializeShardedPool();
+		setJedis(jedisPool.getResource());
+		setShardedJedis(shardedJedisPool.getResource());
+		
+	}
+	
+	// 初始化非切片池 
+	public void initializePool(){
+		//池的配置
+		JedisPoolConfig jpc = new JedisPoolConfig();
+		//最大空闲连接数
+		jpc.setMaxIdle(20);
+		jpc.setMaxIdle(5);
+		//获取连接时的最大等待毫秒数  
+		jpc.setMaxWaitMillis(1000);
+		//在空闲时检查有效性, 默认false  
+		jpc.setTestOnBorrow(false);
+		jedisPool = new JedisPool(jpc, ip, port);
+	}
+	
+	// 初始化切片池
+	public void initializeShardedPool(){
+		//池的配置
+		JedisPoolConfig config = new JedisPoolConfig();
+		config.setMaxIdle(20);
+		config.setMaxWaitMillis(1000);
+		config.setTestOnBorrow(false);
+		// slave链接 
+		//可以实现集群的功能，配置多个redis服务实现请求的分配进行负载均衡  
+		List&lt;JedisShardInfo&gt; shards = new ArrayList&lt;JedisShardInfo&gt;();
+		shards.add(new JedisShardInfo(ip, port, "master"));
+		// 构造池
+		shardedJedisPool = new ShardedJedisPool(config, shards);
+	}
+	
+	public void closeJedisPool(){
+		jedisPool.close();
+	}
+	public void closeShardedJedisPool(){
+		shardedJedisPool.close();
+	}
+
+	public Jedis getJedis() {
+		return jedis;
+	}
+
+	public void setJedis(Jedis jedis) {
+		this.jedis = jedis;
+	}
+
+	public ShardedJedis getShardedJedis() {
+		return shardedJedis;
+	}
+
+	public void setShardedJedis(ShardedJedis shardedJedis) {
+		this.shardedJedis = shardedJedis;
+	}
+}
+</pre>
+</div>
+<p>　　</p>
+<p><strong>3 定义操作接口</strong></p>
+<p><strong>　　</strong></p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:java;gutter:true;">import java.util.Map;
+import java.util.Set;
+
+public interface IRedisService {
+
+	
+	public Boolean setString(String key, String value);
+	public String getString(String key);
+	public Boolean existsKey(String key);
+	public Long delKey(String key);
+	public String typeKey(String key);
+	public Set&lt;String&gt; keys(String key);
+	
+	/**
+	 * 获得map数据集
+	 * @param key
+	 * @return
+	 */
+	public Map&lt;String, String&gt; getMap(String key);
+	
+	/**
+	 * 设置map数据集
+	 * @param key
+	 * @param map
+	 * @return
+	 */
+	public Boolean setMap(String key, Map&lt;String, String&gt; map);
+	
+	/**
+	 * 获得map字段中的值
+	 * @param key
+	 * @param fieldKey
+	 * @return
+	 */
+	public String getMapFieldValue(String key, String fieldKey);
+	
+	/**
+	 * 获得map中多个字段值
+	 * @param key
+	 * @param fieldKeys
+	 * @return
+	 */
+	public Map&lt;String, String&gt; getMapFieldValues(String key, String[] fieldKeys);
+	
+	/**
+	 * 设置map中具体的字段值
+	 * 参考存储格式：{key,map{fieldKey, fieldValue}}
+	 * @param key
+	 * @param fieldKey
+	 * @param fieldValue
+	 * @return
+	 */
+	public Boolean setMapFieldValue(String key, String fieldKey, String fieldValue);
+	
+	
+}
+</pre>
+</div>
+<p>　　</p>
+<p><strong>4 接口实现类</strong></p>
+<p><strong>　　</strong></p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:java;gutter:true;">import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+import com.robert.redis.client.config.RedisPool;
+
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.ShardedJedis;
+
+public class RedisService implements IRedisService{
+
+	private RedisPool redisPool;
+	
+	public RedisService(){
+		redisPool = new RedisPool();
+	}
+	
+	public RedisService(String host){
+		redisPool = new RedisPool(host);
+	}
+	
+	public RedisService(String host, int port){
+		redisPool = new RedisPool(host, port);
+	}
+	
+	private Jedis getJResource(){
+		Jedis jResource = null;
+		jResource = redisPool.getJedis();
+		return jResource;
+	}
+	private ShardedJedis getShardResource(){
+		ShardedJedis sResource = null;
+		sResource = redisPool.getShardedJedis();
+		return sResource;
+	}
+	
+	public Boolean setString(String key, String value) {
+		boolean result = false;
+		ShardedJedis resource = null;
+		try{
+			resource = getShardResource();
+			if(resource != null){
+				resource.set(key, value);
+				result = true;
+			}
+			
+		}catch(Exception e){
+			result = false;
+			e.printStackTrace();
+		}finally{
+			redisPool.closeShardedJedisPool();
+		}
+		return result;
+	}
+
+	public String getString(String key) {
+		String result = null;
+		ShardedJedis resource = null;
+		try{
+			resource = getShardResource();
+			if(resource != null){
+				result = resource.get(key);
+			}
+			
+		}catch(Exception e){
+			result = null;
+			e.printStackTrace();
+		}finally{
+			redisPool.closeShardedJedisPool();
+		}
+		return result;
+	}
+
+	public Boolean existsKey(String key) {
+		Boolean result = false;
+		ShardedJedis resource = null;
+		try{
+			resource = getShardResource();
+			if(resource != null){
+				result = resource.exists(key);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			redisPool.closeShardedJedisPool();
+		}
+		
+		return result;
+	}
+
+	public Long delKey(String key) {
+		Long result = null;
+		ShardedJedis resource = null;
+		try{
+			resource = getShardResource();
+			if(resource != null){
+				result = resource.del(key);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			redisPool.closeShardedJedisPool();
+		}
+		return result;
+	}
+
+	public String typeKey(String key) {
+		String result = null;
+		ShardedJedis resource = null;
+		try{
+			resource = getShardResource();
+			if(resource != null){
+				result = resource.type(key);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			redisPool.closeShardedJedisPool();
+		}
+		return result;
+	}
+
+	public Set&lt;String&gt; keys(String key) {
+		Set&lt;String&gt; result = null;
+		Jedis resource = null;
+		try{
+			resource = getJResource();
+			if(resource != null){
+				result = resource.keys(key);
+			}
+			
+		}catch(Exception e){
+			result = null;
+			e.printStackTrace();
+		}finally{
+			redisPool.closeJedisPool();
+		}
+		return result;
+	}
+
+	public Map&lt;String, String&gt; getMap(String key) {
+		Map&lt;String, String&gt; map = null;
+		ShardedJedis resource = null;
+		try{
+			resource = getShardResource();
+			if(resource != null &amp;&amp; resource.exists(key)){
+				map = resource.hgetAll(key);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			redisPool.closeShardedJedisPool();
+		}
+		return map;
+	}
+
+	public Boolean setMap(String key, Map&lt;String, String&gt; map) {
+		Boolean result = false;
+		ShardedJedis resource = null;
+		try{
+			resource = getShardResource();
+			if(resource != null){
+				resource.hmset(key, map);
+				result = true;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			redisPool.closeShardedJedisPool();
+		}
+		return result;
+	}
+
+	public String getMapFieldValue(String key, String fieldKey) {
+		String result = null;
+		ShardedJedis resource = null;
+		try{
+			resource = getShardResource();
+			if(resource != null &amp;&amp; resource.hexists(key, fieldKey)){
+				result = resource.hget(key, fieldKey);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			redisPool.closeShardedJedisPool();
+		}
+		return result;
+	}
+
+	public Map&lt;String, String&gt; getMapFieldValues(String key, String[] fieldKeys) {
+		Map&lt;String, String&gt; map = new HashMap&lt;String, String&gt;();
+		ShardedJedis resource = null;
+		try{
+			resource = getShardResource();
+			if(resource != null){
+				for(String fieldKey : fieldKeys){
+					map.put(fieldKey, resource.hget(key, fieldKey));
+				}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			redisPool.closeShardedJedisPool();
+		}
+		return map;
+	}
+
+	public Boolean setMapFieldValue(String key, String fieldKey, String fieldValue) {
+		Boolean result = false;
+		ShardedJedis resource = null;
+		try{
+			resource = getShardResource();
+			if(resource != null &amp;&amp; resource.exists(key)){
+				resource.hset(key, fieldKey, fieldValue);
+				result = true;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			redisPool.closeShardedJedisPool();
+		}
+		return result;
+	}
+
+}
+</pre>
+</div>
+<p>　　</p>
+<p><strong>5 测试</strong></p>
+<p>　　</p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:java;gutter:true;"> public static void main( String[] args )
+    {
+        
+    	IRedisService rs = new RedisService();
+    	rs.setString("test", "Hello Redis!");
+    	System.out.println(rs.getString("test"));
+    }
+</pre>
+</div>
+<p>　　</p>
+					</div>
+					<div class="content-text-type">分类：<span>技术</span></div>
+					<div class="content-text-tags">标签：<span>技术，java</span></div>
+					<div class="content-text-meta">发布于&nbsp;2017-10-18 <span>阅读(368)</span></div>
+      	</div>
+      	</div>
+      </div>
+      <div class="row">
+					<ul class="pager">
+						<li  class="previous">
+							<a href="#">上一篇</a>
+						</li>
+						
+						<li class="next">
+							<a href="#">下一篇</a>
+						</li>
+					</ul>
+			</div>
+    </div>
+    
+    <div class="comment">
+    	<div class="container">
+    		<div class="comment-title">评论列表</div>
+    		<hr>
+    		<div class="comment-list">
+    			<div class="comment-item">
+    				<div class="comment-item-meta">2017-10-18&nbsp;@&nbsp;wuyan</div>
+    				<div class="comment-item-text">感谢分享经验</div>
+    			</div>
+    			
+    			
+    		</div>
+    	</div>
+    </div>
+    
+  </div> 
+  
+	<footer class="bolg-footer">
+		<p>无烦恼，言生活！！</p>
+		<p>©2017&nbsp;Design by Robert&nbsp;<a target="_blank" href="http://www.miitbeian.gov.cn/">豫ICP备17036506号-1</a></p>
+	</footer>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/js/bootstrap.min.js"></script>
+  </body>
+</html>

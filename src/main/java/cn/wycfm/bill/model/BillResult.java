@@ -5,7 +5,7 @@ import java.util.Date;
 public class BillResult {
 
 	public Integer billId;
-	public Date billDate;
+	public String billDate;
 	public String description;
 	public Double amount;
 	public Integer status;
@@ -28,10 +28,10 @@ public class BillResult {
 	public void setBillId(Integer billId) {
 		this.billId = billId;
 	}
-	public Date getBillDate() {
+	public String getBillDate() {
 		return billDate;
 	}
-	public void setBillDate(Date billDate) {
+	public void setBillDate(String billDate) {
 		this.billDate = billDate;
 	}
 	public String getDescription() {

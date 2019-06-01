@@ -18,13 +18,13 @@ import cn.wycfm.core.util.FrontUtils;
 /**
  * Servlet implementation class AddBillServlet
  */
-public class BillAddServlet extends HttpServlet {
+public class BillDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BillAddServlet() {
+    public BillDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -47,11 +47,14 @@ public class BillAddServlet extends HttpServlet {
 			return ;
 		}
 		Bill bill = new Bill();
-		bill.setBillDate(request.getParameter("billDate"));
-		bill.setDescription(request.getParameter("description"));
-		bill.setAmount(Double.valueOf(request.getParameter("amount")));
+		String billId = request.getParameter("billId");
+		if(billId == null) {
+			FrontUtils.errorResponse(response, "error");
+			return ;
+		}
+		bill.setBillId(Integer.parseInt(billId));
 		BillService billService = new BillServiceImpl();
-		ResultBean<Integer> result = billService.saveBill(bill,user);
+		ResultBean<Integer> result = billService.deleteBill(bill,user);
 		
 		
 		FrontUtils.resultResponse(response, result);

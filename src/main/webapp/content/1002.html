@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>postgresql  update  from</title>
+	<meta name="keywords" content="倾听，倾听~博客，postgresql  update  from,postgresql 关联表进行多条更新" />
+    <meta name="description" content="postgresql  update  from,postgresql 关联表进行多条更新" />
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.css" rel="stylesheet">
+    <link href="/css/main.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+   <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+      <a class="navbar-brand" href="/">倾听~博客</a>
+      <ul class="navbar-nav">
+        <li class="nav-item active"><a class="nav-link" href="/">首页</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">技术</a></li>
+        <li class="nav-item"><a class="nav-link" href="#life">生活</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+      </ul>
+  </nav>
+   <div class="main">
+    <div class="container">
+    	
+      <div class="row">
+      <div class="col-sm-12">
+      	<div class="content">
+      		<h2>postgresql  update  from</h2>
+      		<hr>
+      		<div class="content-text">
+      			<p>1，update&nbsp; &nbsp;from&nbsp; &nbsp;关联表的更新</p>
+<p>　　update table a set name=b.name from table B b&nbsp; where a.id=b.id;</p>
+<p>　　update test set info=tmp.info from (values (1,'new1'),(2,'new2'),(6,'new6')) as tmp (id,info) where test.id=tmp.id;&nbsp;&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>2 update from&nbsp;</p>
+<p>　　update TABLEA a&nbsp;</p>
+<p>　　set&nbsp; update_time=now,</p>
+<p>　　　　name=case when b.name is not null then d.name else a.name end,</p>
+<p>　　　　age=case when b.age is not null then d.age else a.age end</p>
+<p>&nbsp;</p>
+<p>　　from TABELEB b&nbsp; &nbsp;where a.id=b.id;</p>
+<p>&nbsp;</p>
+<p>3.实际应用举例：</p>
+<p>&nbsp;</p>
+<p>update dp1.m_task mt set update_date=now() <span style="color: #ff0000;">, is_delegated=case when d.is_delegated is not null then d.is_delegated else mt.is_delegated end , priority=case when d.priority is not null then d.priority else mt.priority end , status=case when d.status is not null then d.status else mt.status end, task_group_id=case when d.task_group_id is not null then d.task_group_id else mt.task_group_id end , task_name=case when d.task_name is not null then d.task_name else mt.task_name end , team_id=case when d.team_id is not null then d.team_id else mt.team_id end&nbsp;</span></p>
+<p>from (</p>
+<p>select 100 as client_id,</p>
+<p><span style="color: #ff0000;">is_delegated::integer,priority::integer,status::smallint,task_code::character varying,task_group_id::integer,task_name::character varying,team_id::integer</span></p>
+<p>from (</p>
+<p>select rowindex<span style="color: #ff0000;">,is_delegated,priority,status,task_code,task_group_id,task_name,team_id&nbsp;</span></p>
+<p>from ext.crosstab (</p>
+<p>'</p>
+<p>select rowindex,column_name,column_value</p>
+<p>from field_fixed_detail_table a</p>
+<p>',</p>
+<p>'</p>
+<p>select column_name from fixed_column_table</p>
+<p>'</p>
+<p>)</p>
+<p>as ct ( rowindex integer<span style="color: #ff0000;">,is_delegated varchar,priority varchar,status varchar,task_code varchar,task_group_id varchar,task_integrate_code varchar,task_name varchar,team_id varchar</span>)</p>
+<p>) as fixed</p>
+<p>) as d</p>
+<p>where mt.task_code=d.task_code;</p>
+<p>&nbsp;</p>
+					</div>
+					<div class="content-text-type">分类：<span>技术</span></div>
+					<div class="content-text-tags">标签：<span>技术，java</span></div>
+					<div class="content-text-meta">发布于&nbsp;2017-10-18 <span>阅读(368)</span></div>
+      	</div>
+      	</div>
+      </div>
+      <div class="row">
+					<ul class="pager">
+						<li  class="previous">
+							<a href="#">上一篇</a>
+						</li>
+						
+						<li class="next">
+							<a href="#">下一篇</a>
+						</li>
+					</ul>
+			</div>
+    </div>
+    
+    <div class="comment">
+    	<div class="container">
+    		<div class="comment-title">评论列表</div>
+    		<hr>
+    		<div class="comment-list">
+    			<div class="comment-item">
+    				<div class="comment-item-meta">2017-10-18&nbsp;@&nbsp;wuyan</div>
+    				<div class="comment-item-text">感谢分享经验</div>
+    			</div>
+    			
+    		</div>
+    	</div>
+    </div>
+    
+  </div> 
+  
+	<footer class="bolg-footer">
+		<p>无烦恼，言生活！！</p>
+		<p>©2017&nbsp;Design by Robert&nbsp;<a target="_blank" href="http://www.miitbeian.gov.cn/">豫ICP备17036506号-1</a></p>
+	</footer>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/js/bootstrap.min.js"></script>
+  </body>
+</html>

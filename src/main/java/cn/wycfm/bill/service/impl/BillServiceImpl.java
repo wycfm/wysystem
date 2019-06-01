@@ -61,7 +61,6 @@ public class BillServiceImpl implements BillService{
 	public ResultBean<Integer> saveBill(Bill bill, User user) {
 		BillDao billDao = new BillDaoImpl();
 		Calendar calendar = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
 		ResultBean<Integer> result = new ResultBean<Integer>();
 		try {
 			bill.setUserId(user.getUserId());
@@ -85,8 +84,19 @@ public class BillServiceImpl implements BillService{
 		
 	}
 
-	public void deleteBill(Bill bill, User user) {
-		
+	public ResultBean<Integer> deleteBill(Bill bill, User user) {
+		BillDao billDao = new BillDaoImpl();
+		ResultBean<Integer> result = new ResultBean<Integer>();
+		try {
+			billDao.deleteBill(bill, user);
+			result.setCode("200");
+			result.setDescription("success");
+		} catch (SQLException e) {
+			result.setCode("500");
+			result.setDescription("error");
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 

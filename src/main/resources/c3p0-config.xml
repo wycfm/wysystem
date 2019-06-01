@@ -11,7 +11,7 @@
    <!-- This is my config for mysql-->    
     <named-config name="mysql">    
         <property name="driverClass">com.mysql.jdbc.Driver</property>    
-        <property name="jdbcUrl">jdbc:mysql://47.97.221.240:3306/wysystem?useUnicode=true&amp;characterEncoding=utf-8</property>
+        <property name="jdbcUrl">jdbc:mysql://localhost:3306/wysystem?useUnicode=true&amp;characterEncoding=utf-8</property>
             
         <property name="user">wy</property>    
         <property name="password">wy1013</property>    

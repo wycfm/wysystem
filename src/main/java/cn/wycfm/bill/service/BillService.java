@@ -16,5 +16,5 @@ public interface BillService {
 	List<Map<String,String>> listSumBill(BillQuery bill);
 	ResultBean<Integer> saveBill(Bill bill, User user);
 	void updateBill(Bill bill, User user);
-	void deleteBill(Bill bill, User user);
+	ResultBean<Integer> deleteBill(Bill bill, User user);
 }
