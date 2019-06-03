@@ -13,7 +13,7 @@ import org.thymeleaf.TemplateEngine;
 @WebListener
 public class TemplateEngineUtil {
 	
-	private static final String TEMPLATE_ENGINE_ATTR = "com.e-learn.thymeleaf3.TemplateEngineInstance";
+	private static final String TEMPLATE_ENGINE_ATTR = "cn.wycfm.core.TemplateEngineInstance";
 	
 	public static void storeTemplateEngine(ServletContext context, TemplateEngine engine) {
         context.setAttribute(TEMPLATE_ENGINE_ATTR, engine);
