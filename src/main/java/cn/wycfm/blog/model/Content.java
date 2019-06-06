@@ -18,4 +18,114 @@ public class Content {
 	
 	private String txt;
 	
+	private String contentTag;
+	private Integer typeId;
+
+	
+	public Integer getContentId() {
+		return contentId;
+	}
+
+	public void setContentId(Integer contentId) {
+		this.contentId = contentId;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getTitleImg() {
+		return titleImg;
+	}
+
+	public void setTitleImg(String titleImg) {
+		this.titleImg = titleImg;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public String getOrigin() {
+		return origin;
+	}
+
+	public void setOrigin(String origin) {
+		this.origin = origin;
+	}
+
+	public String getOriginUrl() {
+		return originUrl;
+	}
+
+	public void setOriginUrl(String originUrl) {
+		this.originUrl = originUrl;
+	}
+
+	public String getContentImg() {
+		return contentImg;
+	}
+
+	public void setContentImg(String contentImg) {
+		this.contentImg = contentImg;
+	}
+
+	public Date getReleaseDate() {
+		return releaseDate;
+	}
+
+	public void setReleaseDate(Date releaseDate) {
+		this.releaseDate = releaseDate;
+	}
+
+	public Integer getNeedRegenerate() {
+		return needRegenerate;
+	}
+
+	public void setNeedRegenerate(Integer needRegenerate) {
+		this.needRegenerate = needRegenerate;
+	}
+
+	public String getTxt() {
+		return txt;
+	}
+
+	public void setTxt(String txt) {
+		this.txt = txt;
+	}
+
+	public String getContentTag() {
+		return contentTag;
+	}
+
+	public void setContentTag(String contentTag) {
+		this.contentTag = contentTag;
+	}
+
+	public Integer getTypeId() {
+		return typeId;
+	}
+
+	public void setTypeId(Integer typeId) {
+		this.typeId = typeId;
+	}
+	
+	
+	
 }

@@ -2,6 +2,7 @@ package cn.wycfm.core.servlet;
 
 import java.io.IOException;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,7 +11,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
 import cn.wycfm.core.util.TemplateEngineUtil;
-
+@WebServlet("/index")
 public class IndexThymeleafServlet extends HttpServlet{
 
 	/**

@@ -22,16 +22,25 @@
   </servlet> -->
   
   
+  <filter>
+  	<filter-name>EncodingFilter</filter-name>
+  	<filter-class>cn.wycfm.core.filter.EncodingFilter</filter-class>
+  	<init-param>
+  		<param-name>encoding</param-name>
+  		<param-value>UTF-8</param-value>
+  	</init-param>
+  </filter>
+  
+  <filter-mapping>
+  	<filter-name>EncodingFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
   <servlet>
   	<servlet-name>blogAction</servlet-name>
   	<servlet-class>cn.wycfm.blog.servlet.BlogServlet</servlet-class>
   </servlet>
-  <servlet>
-  	<servlet-name>ContentAddServlet</servlet-name>
-  	<display-name>ContentAddServlet</display-name>
-  	<description></description>
-  	<servlet-class>cn.wycfm.blog.servlet.ContentAddServlet</servlet-class>
-  </servlet>
+ 
   <servlet>
   	<servlet-name>BillServlet</servlet-name>
   	<display-name>BillServlet</display-name>
@@ -69,13 +78,6 @@
   	<servlet-class>cn.wycfm.core.servlet.LoginServlet</servlet-class>
   </servlet>
   
-  <servlet>
-  	<servlet-name>IndexThymeleafServlet</servlet-name>
-  	<display-name>IndexThymeleafServlet</display-name>
-  	<description></description>
-  	<servlet-class>cn.wycfm.core.servlet.IndexThymeleafServlet</servlet-class>
-  </servlet>
-  
   
   <!-- <servlet-mapping>
   	<servlet-name>coreAction</servlet-name>
@@ -86,10 +88,7 @@
   	<servlet-name>blogAction</servlet-name>
   	<url-pattern>/blog</url-pattern>
   </servlet-mapping>
-  <servlet-mapping>
-  	<servlet-name>ContentAddServlet</servlet-name>
-  	<url-pattern>/member/contentadd</url-pattern>
-  </servlet-mapping>
+ 
   <servlet-mapping>
   	<servlet-name>BillServlet</servlet-name>
   	<url-pattern>/bill</url-pattern>
@@ -118,10 +117,7 @@
   	<url-pattern>/login</url-pattern>
   </servlet-mapping>
   
-  <servlet-mapping>
-  	<servlet-name>IndexThymeleafServlet</servlet-name>
-  	<url-pattern>/index</url-pattern>
-  </servlet-mapping>
+ 
   
   
   <welcome-file-list>

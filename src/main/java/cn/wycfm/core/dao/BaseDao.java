@@ -43,6 +43,36 @@ public abstract class BaseDao {
 	}
 	
 	
+	/**
+	 * 插入操作，并且返回自增长主键(核心方法)
+	 * @param sql
+	 * @param args
+	 * @param argTypes
+	 * @return
+	 * @throws Exception
+	 */
+	public int insertAndGetKey(String sql, Object[] args, int[] argTypes) throws SQLException{
+		PreparedStatementCreator psc = new SimplePreparedStatementCreator(sql, args, argTypes);
+		
+		return updateGetKey(psc);
+	}
+	
+	public int updateGetKey(PreparedStatementCreator psc) throws SQLException{
+		return execute(psc, new PreparedStatementCallback<Integer>(){
+
+			public Integer doInPreparedStatement(PreparedStatement ps) throws SQLException {
+				int key = 0;
+				ps.executeUpdate();
+				ResultSet keys = ps.getGeneratedKeys();
+				while(keys.next()) {
+					key = keys.getInt(1);
+				}
+				return key;
+			}
+			
+		});
+	}
+	
 	public int update(PreparedStatementCreator psc) throws SQLException{
 		
 		return execute(psc, new PreparedStatementCallback<Integer>() {
