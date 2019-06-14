@@ -11,7 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
+import cn.wycfm.blog.model.Content;
+import cn.wycfm.blog.service.ContentService;
+import cn.wycfm.blog.service.impl.ContentServiceImpl;
+import cn.wycfm.core.model.ResultBean;
 import cn.wycfm.core.model.User;
+import cn.wycfm.core.util.CoreUtil;
+import cn.wycfm.core.util.FrontUtils;
 import cn.wycfm.core.util.TemplateEngineUtil;
 
 /**
@@ -48,7 +54,26 @@ public class ContentAddServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		doGet(request, response);
+		User user = CoreUtil.getUser(request);
+		/*if(user==null) {
+			FrontUtils.errorResponse(response, "noLogin");
+			return ;
+		}*/
+		user = new User();
+		user.setUserId(1);
+		//String title = request.getParameter("title");
+		String typeId = request.getParameter("typeId");
+		Content c = new Content();
+		c.setTitle(request.getParameter("title"));
+		c.setTxt(request.getParameter("txt"));
+		c.setDescription(request.getParameter("description"));
+		c.setTypeId(typeId==null ? 1 : Integer.valueOf(typeId));
+		c.setContentTag(request.getParameter("tagName"));
+		ContentService cs = new ContentServiceImpl();
+		ResultBean<Integer> addContent = cs.addContent(user,c);
+		
+		FrontUtils.resultResponse(response, addContent);
+		
 	}
 
 }

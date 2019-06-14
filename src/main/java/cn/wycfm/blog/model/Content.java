@@ -18,6 +18,7 @@ public class Content {
 	
 	private String txt;
 	
+	private Integer tagId;
 	private String contentTag;
 	private Integer typeId;
 
@@ -108,6 +109,14 @@ public class Content {
 
 	public void setTxt(String txt) {
 		this.txt = txt;
+	}
+
+	public Integer getTagId() {
+		return tagId;
+	}
+
+	public void setTagId(Integer tagId) {
+		this.tagId = tagId;
 	}
 
 	public String getContentTag() {

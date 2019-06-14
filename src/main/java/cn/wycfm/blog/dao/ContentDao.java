@@ -8,7 +8,9 @@ import cn.wycfm.blog.model.Content;
 
 public interface ContentDao {
 	
-	public List<Map<String, Object>> listContent() throws SQLException;
+	public List<Map<String, Object>> listContent(Integer userId, String title) throws SQLException;
 	
 	public int addContent(Content content, Integer userId) throws Exception;
+	
+	public int addContentTag(String tagName) throws Exception;
 }

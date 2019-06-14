@@ -29,7 +29,7 @@
     <![endif]-->
   </head>
   <body>
-  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark" th:replace="/blog/include/nav.html::nav">
       <a class="navbar-brand" href="/">倾听~博客</a>
       <ul class="navbar-nav">
         <li class="nav-item"><a class="nav-link" href="/">首页</a></li>
@@ -47,29 +47,33 @@
   </div>
   <hr>
    <div class="main-article">
-	<div class="container">
+	<div class="">
 		<div class="row"> 
+			<div class="col-sm-1 user-bar">
+				
+			</div>
 			<div class="col-sm-2 user-bar">
 				<div class="user_function">
 				<ul class="list-unstyled">
 				<li><a href="#">个人信息</a></li>
 				<li><a href="#">文章列表</a></li>
-				<li><a href="addArticle.html">发表文章</a></li>
+				<li><a href="/content/add">发表文章</a></li>
 				</ul>
 				</div>
 			</div>
 			
-		    <div class="col-sm-10 editor-container">
+		    <div class="col-sm-8 editor-container">
+		    	<form id="articleSubmit" action="" method="post" >
 				<div class="edit_row edit_title">
 					<label class="control-label" for="title_input">标题</label>
-					<input type="input" class="form-control"  id="title_input" placeholder="标题">
+					<input type="text" class="form-control" name="title"   id="title_input" placeholder="标题">
 				</div>
 				<div class="edit_row edit_body">
-		    	<script id="editor" type="text/plain" style="width:1024px;height:500px;"></script>
+		    	<script id="editor" type="text/plain" style="height:500px;"></script>
 				</div>
 				<div class="edit_row edit-type">
 					<label class="control-label" for="desc_textarea">摘要</label>
-					<textarea class="form-control" id="desc_textarea" rows="3"></textarea>
+					<textarea class="form-control" name="description" id="desc_textarea" rows="3"></textarea>
 				
 				</div>
 				<div class="edit_row edit-type">
@@ -87,17 +91,24 @@
 				</div>
 				<div class="edit_row edit-tag">
 					<label class="control-label" for="tag_input">Tag标签:</label>
-					<input type="input" class="form-control"  id="tag_input" placeholder="tag标签">
+					<input type="text" name="contentTag" class="form-control"  id="tag_input" placeholder="tag标签">
 				</div>
+				<div class="row" style="height:20px;"></div>
 				<div class="edit_row edit-add">
 					<button type="submit" class="btn btn-primary">发布</button>
 				</div>
+				</form>
 		    </div>
+		    <div class="col-sm-1">
+				
+			</div>
 	    </div>
+	    <div class="row" style="height: 20px;"></div>
     </div>
+    
   </div> 
  
-	<footer class="bolg-footer">
+	<footer class="bolg-footer" th:replace="/blog/include/footer.html::footer">
 		<p>无烦恼，言生活之美！！</p>
 		<p>©2017&nbsp;Design by 吴严&nbsp;<a target="_blank" href="http://www.miitbeian.gov.cn/">豫ICP备17036506号-1</a></p>
 	</footer>
@@ -128,11 +139,12 @@
         alert(UE.getEditor('editor').getAllHtml())
     }
     function getContent() {
-        var arr = [];
+        /* var arr = [];
         arr.push("使用editor.getContent()方法可以获得编辑器的内容");
         arr.push("内容为：");
         arr.push(UE.getEditor('editor').getContent());
-        alert(arr.join("\n"));
+        alert(arr.join("\n")); */
+        return UE.getEditor('editor').getContent();
     }
     function getPlainTxt() {
         var arr = [];
@@ -162,7 +174,8 @@
         var range = UE.getEditor('editor').selection.getRange();
         range.select();
         var txt = UE.getEditor('editor').selection.getText();
-        alert(txt)
+        return txt;
+        //alert(txt)
     }
 
     function getContentTxt() {
@@ -218,5 +231,6 @@
     <script src="/js/jquery-3.3.1.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/blog/addArticle.js"></script>
   </body>
 </html>
