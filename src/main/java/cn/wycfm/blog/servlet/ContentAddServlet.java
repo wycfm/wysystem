@@ -1,6 +1,8 @@
 package cn.wycfm.blog.servlet;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -69,6 +71,8 @@ public class ContentAddServlet extends HttpServlet {
 		c.setDescription(request.getParameter("description"));
 		c.setTypeId(typeId==null ? 1 : Integer.valueOf(typeId));
 		c.setContentTag(request.getParameter("tagName"));
+		c.setReleaseDate(new Timestamp(System.currentTimeMillis()));
+		c.setNeedRegenerate(1);
 		ContentService cs = new ContentServiceImpl();
 		ResultBean<Integer> addContent = cs.addContent(user,c);
 		

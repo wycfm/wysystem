@@ -68,7 +68,7 @@ public class ContentDaoImpl extends BaseDao implements ContentDao{
 		args = new Object[] {contentId, content.getTitle(), content.getOrigin(), 
 				content.getOriginUrl(), content.getDescription(), content.getReleaseDate(), content.getNeedRegenerate()};
 		argTypes = new int[] {Types.INTEGER, Types.VARCHAR, Types.VARCHAR, 
-				Types.VARCHAR, Types.VARCHAR, Types.DATE, Types.INTEGER};
+				Types.VARCHAR, Types.VARCHAR, Types.TIMESTAMP, Types.INTEGER};
 		this.executeForUpdate(contentExtSql, args, argTypes);
 		
 		String contentTxtSql = "insert into content_txt(content_id,txt) values(?,?)";

@@ -52,7 +52,7 @@ $(function(){
 			cache: false
 		}).done(function(datas){
 			console.log(datas);
-			if(data.code=="200"){
+			if(datas.code=="200"){
 				isSubmit = false;
 				alert("添加成功");
 				window.location.reload();

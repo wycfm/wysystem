@@ -1,5 +1,6 @@
 package cn.wycfm.blog.model;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Content {
@@ -12,7 +13,7 @@ public class Content {
 	private String origin;
 	private String originUrl;
 	private String contentImg;
-	private Date releaseDate;
+	private Timestamp releaseDate;
 	//是否需要重新生成静态页面
 	private Integer needRegenerate;
 	
@@ -87,11 +88,11 @@ public class Content {
 		this.contentImg = contentImg;
 	}
 
-	public Date getReleaseDate() {
+	public Timestamp getReleaseDate() {
 		return releaseDate;
 	}
 
-	public void setReleaseDate(Date releaseDate) {
+	public void setReleaseDate(Timestamp releaseDate) {
 		this.releaseDate = releaseDate;
 	}
 
