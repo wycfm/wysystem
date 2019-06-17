@@ -325,9 +325,16 @@ $(function(){
 			for(var i=0; i < datas.length; i++){
 				var data = datas[i];
 				allTotal = parseFloat(allTotal)+parseFloat(data.total);
-				htmlArr.push(data.nickName+":"+Number(data.total)+"&nbsp;&nbsp;");
+				htmlArr.push(data.nickName+":<span class='sum-every-one'>"+Number(data.total)+"</span><br/>");
 			}
-			$("#count-show").html("总金额："+allTotal+"&nbsp;&nbsp;"+htmlArr.join('')+"&nbsp;&nbsp;&nbsp;平均："+parseFloat(allTotal/datas.length));
+			var avg = parseFloat(allTotal/datas.length);
+			$("#count-show").html("总金额："+allTotal+"<br/>"+htmlArr.join('')+"<br/>平均："+Math.round(avg));
+			$("#count-show").find(".sum-every-one").each(function(){
+				var _this = $(this);
+				var c = parseFloat(_this.text())-avg;
+				_this.after("&nbsp;&nbsp;"+Math.round(c));
+			});
+			
 		}else{
 			$("#count-show").html('无数据');
 		}

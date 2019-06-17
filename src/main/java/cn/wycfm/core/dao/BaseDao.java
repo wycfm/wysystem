@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import cn.wycfm.core.jdbc.GetKeyPreparedStatementCreator;
 import cn.wycfm.core.jdbc.ParameterizedRowMapper;
 import cn.wycfm.core.jdbc.PreparedStatementCallback;
 import cn.wycfm.core.jdbc.PreparedStatementCreator;
@@ -52,7 +53,7 @@ public abstract class BaseDao {
 	 * @throws Exception
 	 */
 	public int insertAndGetKey(String sql, Object[] args, int[] argTypes) throws SQLException{
-		PreparedStatementCreator psc = new SimplePreparedStatementCreator(sql, args, argTypes);
+		PreparedStatementCreator psc = new GetKeyPreparedStatementCreator(sql, args, argTypes);
 		
 		return updateGetKey(psc);
 	}
