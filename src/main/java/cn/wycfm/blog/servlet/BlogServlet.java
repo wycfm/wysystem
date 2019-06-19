@@ -10,10 +10,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
+
 import cn.wycfm.blog.dao.ContentDao;
 import cn.wycfm.blog.dao.impl.ContentDaoImpl;
 import cn.wycfm.blog.service.ContentService;
 import cn.wycfm.blog.service.impl.ContentServiceImpl;
+import cn.wycfm.core.model.User;
+import cn.wycfm.core.util.CoreUtil;
+import cn.wycfm.core.util.FrontUtils;
+import cn.wycfm.core.util.TemplateEngineUtil;
 
 public class BlogServlet extends HttpServlet{
 
@@ -24,18 +31,24 @@ public class BlogServlet extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		//ContentService contentService = new ContentServiceImpl();
-		System.out.println("BlogAction:" + req.getRequestURI());
+		TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
+		WebContext context = new WebContext(req, resp, req.getServletContext());
+		ContentService contentService = new ContentServiceImpl();
+		User user = CoreUtil.getUser(req);
+		//System.out.println("BlogAction:" + req.getRequestURI());
+		if(user==null) {
+			FrontUtils.errorResponse(resp, "noLogin");
+			return;
+		}
 		try {
-			/*List<Map<String, Object>> contentList = contentService.listContent();
-			for (Map<String, Object> map : contentList) {
-				System.out.println("id:"+map.get("id")+",name:"+map.get("name"));
-			}*/
+			List<Map<String, Object>> contentList = contentService.listContent(user,null);
+			req.setAttribute("contentList", contentList);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		req.getRequestDispatcher("/WEB-INF/t/blog/index/index.html").forward(req, resp);
+		engine.process("/blog/index/index.html", context, resp.getWriter());
+		//req.getRequestDispatcher("/WEB-INF/t/blog/index/index.html").forward(req, resp);
 	}
 	
 	@Override
