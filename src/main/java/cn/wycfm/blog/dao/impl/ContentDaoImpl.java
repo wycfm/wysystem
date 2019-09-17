@@ -112,7 +112,7 @@ public class ContentDaoImpl extends BaseDao implements ContentDao{
 		
 		try {
 			sqlSession = dbAccess.getSqlSession();
-			sqlSession.selectList("");
+			List<Object> selectList = sqlSession.selectList("Content.queryContentList");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

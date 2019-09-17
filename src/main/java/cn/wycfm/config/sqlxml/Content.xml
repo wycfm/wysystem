@@ -17,15 +17,15 @@
 
 <mapper namespace="Content">
 
-  <resultMap type="ContentAlias" id="ContentResult">
-    <id column="id" jdbcType="INTEGER" property="id"/>
-    <result column="username" jdbcType="VARCHAR" property="username"/>
-    <result column="password" jdbcType="VARCHAR" property="password.encrypted"/>
-    <result column="administrator" jdbcType="BOOLEAN" property="administrator"/>
+  <resultMap type="cn.wycfm.blog.model.Content" id="ContentResult">
+    <id column="content_id" jdbcType="INTEGER" property="contentId"/>
+    <result column="title" jdbcType="VARCHAR" property="title"/>
+    <result column="description" jdbcType="VARCHAR" property="description"/>
+    <result column="txt" jdbcType="VARCHAR" property="txt"/>
   </resultMap>
 
-  <select id="find" parameterType="long" resultMap="ContentResult">
-    SELECT * FROM user WHERE id = #{id:INTEGER}
+  <select id="queryContentList"  resultMap="ContentResult">
+    SELECT content_id,title,description,txt FROM content WHERE 1=1
   </select>
 
   <!-- <select id="version" parameterType="long" resultType="int">
