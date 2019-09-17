@@ -1,5 +1,6 @@
 package cn.wycfm.blog.dao.impl;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,11 +11,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
+
 import cn.wycfm.blog.dao.ContentDao;
 import cn.wycfm.blog.model.Content;
 import cn.wycfm.core.dao.BaseDao;
 import cn.wycfm.core.jdbc.ResultSetExtractor;
 import cn.wycfm.core.util.DBUtil;
+import cn.wycfm.db.DBAccess;
 
 public class ContentDaoImpl extends BaseDao implements ContentDao{
 
@@ -100,6 +104,28 @@ public class ContentDaoImpl extends BaseDao implements ContentDao{
 			int tagId = this.insertAndGetKey(contentTagSql, args, argTypes);
 			return tagId;
 		}
+	}
+	
+	public List<Map<String,String>> queryContentList(){
+		DBAccess dbAccess = new DBAccess();
+		SqlSession sqlSession = null;
+		
+		try {
+			sqlSession = dbAccess.getSqlSession();
+			sqlSession.selectList("");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			if(sqlSession!=null)
+				sqlSession.close();
+		}
+		return null;
+	}
+	
+	public static void main(String[] args) {
+		ContentDaoImpl c = new ContentDaoImpl();
+		c.queryContentList();
 	}
 
 }
