@@ -62,7 +62,6 @@ public class ContentDaoImpl extends BaseDao implements ContentDao{
 		int[] argTypes = new int[] {Types.VARCHAR};
 		int tagId = this.insertAndGetKey(contentTagSql, args, argTypes);
 		*/
-		
 		String contentSql = "insert into content(user_id,tag_id,type_id,status) values(?,?,?,1)";
 		Object[] args = new Object[] {userId, content.getTagId(), content.getTypeId()};
 		int[] argTypes = new int[] {Types.INTEGER, Types.INTEGER, Types.INTEGER};
@@ -106,13 +105,13 @@ public class ContentDaoImpl extends BaseDao implements ContentDao{
 		}
 	}
 	
-	public List<Map<String,String>> queryContentList(){
+	public List<Map<String,String>> queryContentList(Content c){
 		DBAccess dbAccess = new DBAccess();
 		SqlSession sqlSession = null;
-		
+		List<Content> selectList = null;
 		try {
 			sqlSession = dbAccess.getSqlSession();
-			List<Object> selectList = sqlSession.selectList("Content.queryContentList");
+			selectList = sqlSession.selectList("Content.queryContentList", c);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -120,12 +119,19 @@ public class ContentDaoImpl extends BaseDao implements ContentDao{
 			if(sqlSession!=null)
 				sqlSession.close();
 		}
+		for(Content con : selectList) {
+			System.out.print(con.getTitle());
+		}
+		
 		return null;
 	}
 	
 	public static void main(String[] args) {
-		ContentDaoImpl c = new ContentDaoImpl();
-		c.queryContentList();
+		Content c = new Content();
+		c.setTitle("≤‚ ‘");
+		c.setUserId(2);
+		ContentDaoImpl cd = new ContentDaoImpl();
+		cd.queryContentList(c);
 	}
 
 }

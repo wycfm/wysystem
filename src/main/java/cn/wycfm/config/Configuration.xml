@@ -33,9 +33,9 @@
       </transactionManager>
       <dataSource type="UNPOOLED">
         <property name="driver" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://127.0.0.1:3306/wysystem"/>
-        <property name="username" value="root"/>
-        <property name="password" value="root"/>
+        <property name="url" value="jdbc:mysql://47.97.221.240:3306/wysystem"/>
+        <property name="username" value="wy"/>
+        <property name="password" value="wy1013"/>
       </dataSource>
     </environment>
   </environments>

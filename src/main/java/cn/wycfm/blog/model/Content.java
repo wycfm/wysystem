@@ -14,7 +14,7 @@ public class Content {
 	private String originUrl;
 	private String contentImg;
 	private Timestamp releaseDate;
-	//是否需要重新生成静态页面
+	//
 	private Integer needRegenerate;
 	
 	private String txt;
@@ -23,6 +23,7 @@ public class Content {
 	private String contentTag;
 	private Integer typeId;
 
+	private Integer userId;
 	
 	public Integer getContentId() {
 		return contentId;
@@ -134,6 +135,14 @@ public class Content {
 
 	public void setTypeId(Integer typeId) {
 		this.typeId = typeId;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 	
 	

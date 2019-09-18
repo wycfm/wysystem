@@ -22,10 +22,20 @@
     <result column="title" jdbcType="VARCHAR" property="title"/>
     <result column="description" jdbcType="VARCHAR" property="description"/>
     <result column="txt" jdbcType="VARCHAR" property="txt"/>
+    <result column="user_id" jdbcType="INTEGER" property="userId"/>
   </resultMap>
 
-  <select id="queryContentList"  resultMap="ContentResult">
-    SELECT content_id,title,description,txt FROM content WHERE 1=1
+  <select id="queryContentList" parameterType="cn.wycfm.blog.model.Content"  resultMap="ContentResult">
+    SELECT c.content_id,ce.title,ce.description,ct.txt FROM content c
+    inner join content_ext ce on ce.content_id=c.content_id
+    inner join content_txt ct on ct.content_id=c.content_id
+    WHERE 1=1
+    <if test="title != null and title.trim!=''">
+    	and ce.title like '%' #{title} '%'
+    </if>
+    <if test="userId !=null and userId>0">
+    	and c.user_id=#{userId}
+    </if>
   </select>
 
   <!-- <select id="version" parameterType="long" resultType="int">

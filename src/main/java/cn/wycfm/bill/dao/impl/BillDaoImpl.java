@@ -101,5 +101,17 @@ public class BillDaoImpl extends BaseDao implements BillDao{
 		this.executeForUpdate(sql, args, argTypes);
 	}
 
+	
+	public List<BillResult> queryBillList(BillQuery bill) throws SQLException {
+		StringBuilder sql = new StringBuilder();
+		sql.append("select b.bill_id,date_format(b.bill_date,'%Y-%m-%d') as bill_date,b.description,b.amount,b.user_id,b.input_time,b.year,b.month, ")
+		.append(" u.username,u.mobile, u.nickname ")
+		.append(" from bill_base b ")
+		.append(" inner join user u on u.user_id=b.user_id ")
+		.append(" where b.bill_date>=? and b.bill_date<=? and b.user_id in (").append(bill.getUserIds()).append(") and b.status=1 order by b.bill_id desc");
+		
+	
+		return null;
+	}
 
 }
