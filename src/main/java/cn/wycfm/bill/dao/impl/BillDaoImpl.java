@@ -1,11 +1,15 @@
 package cn.wycfm.bill.dao.impl;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.ibatis.session.SqlSession;
 
 import cn.wycfm.bill.dao.BillDao;
 import cn.wycfm.bill.model.Bill;
@@ -14,6 +18,7 @@ import cn.wycfm.bill.model.BillResult;
 import cn.wycfm.core.dao.BaseDao;
 import cn.wycfm.core.jdbc.ParameterizedRowMapper;
 import cn.wycfm.core.model.User;
+import cn.wycfm.db.DBAccess;
 
 public class BillDaoImpl extends BaseDao implements BillDao{
 
@@ -75,7 +80,7 @@ public class BillDaoImpl extends BaseDao implements BillDao{
 		});
 	}
 	
-	public void saveBill(Bill bill) throws SQLException {
+	/*public void saveBill(Bill bill) throws SQLException {
 		String sql = "insert into bill_base(bill_date,description,amount,user_id,input_time,year,month) values(?,?,?,?,?,?,?);";
 		Object[] args = new Object[] {bill.getBillDate(), bill.getDescription(), bill.getAmount(),
 				bill.getUserId(), bill.getInputTime(), bill.getYear(), bill.getMonth()};
@@ -99,19 +104,78 @@ public class BillDaoImpl extends BaseDao implements BillDao{
 		int[] argTypes = new int[] {Types.INTEGER, Types.INTEGER};
 		
 		this.executeForUpdate(sql, args, argTypes);
+	}*/
+
+	public void saveBill(Bill bill) throws SQLException {
+		DBAccess dbAccess = new DBAccess();
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = dbAccess.getSqlSession();
+			sqlSession.insert("Bill.saveBill", bill);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
+	public void updateBill(Bill bill) throws SQLException{
+		DBAccess dbAccess = new DBAccess();
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = dbAccess.getSqlSession();
+			sqlSession.update("Bill.updateBill", bill);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void deleteBill(Bill bill, User user) throws SQLException{
+		DBAccess dbAccess = new DBAccess();
+		SqlSession sqlSession = null;
+		try {
+			bill.setUserId(user.getUserId());
+			sqlSession = dbAccess.getSqlSession();
+			sqlSession.update("Bill.deleteBill", bill);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
-	public List<BillResult> queryBillList(BillQuery bill) throws SQLException {
-		StringBuilder sql = new StringBuilder();
-		sql.append("select b.bill_id,date_format(b.bill_date,'%Y-%m-%d') as bill_date,b.description,b.amount,b.user_id,b.input_time,b.year,b.month, ")
-		.append(" u.username,u.mobile, u.nickname ")
-		.append(" from bill_base b ")
-		.append(" inner join user u on u.user_id=b.user_id ")
-		.append(" where b.bill_date>=? and b.bill_date<=? and b.user_id in (").append(bill.getUserIds()).append(") and b.status=1 order by b.bill_id desc");
+	public List<Bill> queryBillList(BillQuery bill) {
+		//得到 sqlSession
+		DBAccess dbAccess = new DBAccess();
+		SqlSession sqlSession = null;
+		List<Bill> list = new ArrayList<Bill>();
+		try {
+			sqlSession = dbAccess.getSqlSession();
+			list = sqlSession.selectList("Bill.queryBillList", bill);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	
-		return null;
+		return list;
+	}
+	
+	public static void main(String[] args) {
+		List<Integer> list = new ArrayList<Integer>();
+		list.add(10);
+		list.add(5);
+		BillQuery bq = new BillQuery();
+		bq.setQuserIds(list);
+		BillDaoImpl b = new BillDaoImpl();
+		List<Bill> queryBillList = b.queryBillList(bq);
+		for(Bill bill: queryBillList) {
+			System.out.println(bill.description);
+			System.out.println(bill.getUser());
+		}
 	}
 
 }

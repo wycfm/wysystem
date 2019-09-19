@@ -2,6 +2,8 @@ package cn.wycfm.bill.model;
 
 import java.sql.Timestamp;
 
+import cn.wycfm.core.model.User;
+
 public class Bill {
 
 	public Integer billId;
@@ -15,6 +17,7 @@ public class Bill {
 	public Integer year;
 	public Integer month;
 	
+	private User user;
 	
 	public Integer getBillId() {
 		return billId;
@@ -75,6 +78,12 @@ public class Bill {
 	}
 	public void setMonth(Integer month) {
 		this.month = month;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	

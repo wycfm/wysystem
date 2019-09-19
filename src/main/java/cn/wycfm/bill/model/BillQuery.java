@@ -1,11 +1,14 @@
 package cn.wycfm.bill.model;
 
+import java.util.List;
+
 public class BillQuery {
 
 	private String userIds;
 	private String yearMonth;
 	private String startDate;
 	private String endDate;
+	private List<Integer> quserIds;
 	
 	
 	public String getUserIds() {
@@ -31,6 +34,12 @@ public class BillQuery {
 	}
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+	}
+	public List<Integer> getQuserIds() {
+		return quserIds;
+	}
+	public void setQuserIds(List<Integer> quserIds) {
+		this.quserIds = quserIds;
 	}
 	
 	

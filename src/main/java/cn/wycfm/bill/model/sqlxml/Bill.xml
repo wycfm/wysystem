@@ -14,7 +14,7 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper>
+<mapper namespace="Bill">
 	
 	<resultMap type="cn.wycfm.bill.model.Bill" id="BillResult">
 		<id column="bill_id" jdbcType="INTEGER" property="billId"/>
@@ -27,10 +27,46 @@
 		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
 		<result column="year" jdbcType="INTEGER" property="year" />
 		<result column="month" jdbcType="INTEGER" property="month" />
+		<association property="user" javaType="cn.wycfm.core.model.User">
+			<id column="user_id" property="userId"/>
+			<result column="username" property="userName"/>
+			<result column="nickname" property="nickName"/>
+		</association>
 	</resultMap>
 	
 	<select id="queryBillList" parameterType="cn.wycfm.bill.model.BillQuery" resultMap="BillResult">
+		select b.bill_id,b.description,b.amount,b.status,u.user_id,u.username,u.nickname from bill_base b
+		left join user u on u.user_id=b.user_id
+		where b.status=1
+		<if test="startDate!=null and !&quot;&quot;.equals(startDate.trim())">
+			and b.bill_date &gt;= #{startDate}
+		</if>
+		<if test="endDate!=null and !&quot;&quot;.equals(endDate.trim())">
+			and b.bill_date &lt;= #{endDate}
+		</if>
+		<if test="quserIds!=null and quserIds.size() &gt; 0">
+			and b.user_id in (
+				<foreach collection="quserIds" index="i" item="item" separator=",">
+					#{item}
+				</foreach>
+			)
+		</if>
+		
 		
 	</select>
+	
+	<insert id="saveBill" parameterType="cn.wycfm.bill.model.Bill" useGeneratedKeys="true">
+		insert into bill_base(bill_date,description,amount,user_id,input_time,year,month)
+		values(#{billDate},#{description},#{amount},#{userId},#{input_time},#{year},#{month})
+	</insert>
 
+	<update id="updateBill" parameterType="cn.wycfm.bill.model.Bill" >
+		update bill_base set bill_date=#{billDate}, description=#{description}, amount=#{amount} 
+		where bill_id=#{billId} and user_id=#{userId}
+	</update>
+	
+	<update id="deleteBill" parameterType="cn.wycfm.bill.model.Bill">
+		update bill_base set status=0 where user_id=#{userId} and bill_id=#{billId}
+	</update>
+	
 </mapper>
