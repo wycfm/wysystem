@@ -16,11 +16,41 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="User">
 	
+	
 	<resultMap type="cn.wycfm.core.model.User" id="UserResult">
 		<id column="user_id" jdbcType="INTEGER" property="userId"/>
-		<result column="username" property="userName"/>
-		<result column="nickname" property="nickName"/>
+		<result column="username" jdbcType="VARCHAR" property="userName"/>
+		<result column="password" jdbcType="VARCHAR" property="password"/>
+		<result column="nickname" jdbcType="VARCHAR" property="nickName"/>
+		<result column="signature" jdbcType="VARCHAR" property="signature"/>
+		<result column="mobile" jdbcType="VARCHAR" property="mobile" />
+		<result column="email" jdbcType="VARCHAR" property="email"/>
+		<result column="is_admin" jdbcType="BOOLEAN" property="boolAdmin" />
+		<result column="is_disabled" jdbcType="BOOLEAN" property="booldisabled" />
+		<result column="update_time" jdbcType="DATE" property="updateTime" />
+		<result column="bill_user" jdbcType="BOOLEAN" property="billUser" />
 	</resultMap>
+	
+	<select id="getUserForLogin" parameterType="cn.wycfm.core.model.User" resultMap="UserResult">
+		select user_id,username,nickname,signature,mobile,email 
+		from user 
+		where is_disabled=1
+		<choose>
+			<when test="userName!=null and !&quot;&quot;.equals(userName.trim()) 
+			and password!=null and !&quot;&quot;.equals(password.trim())">
+	        	and username=#{userName} and password=md5(#{password})
+	    	</when>
+	    	<otherwise>
+	        	and user_id=-1;
+	    	</otherwise>
+		</choose>
+	</select>
+	
+	<select id="getUser" parameterType="int" resultMap="UserResult">
+		select user_id,username,nickname,signature,mobile,email from user 
+		where user_id=#{_parameter}
+	</select>
+	
 	
 	
 	

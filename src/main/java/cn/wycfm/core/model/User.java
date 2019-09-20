@@ -20,6 +20,8 @@ public class User {
 	private String lastLoginIp;
 	private Date updateTime;
 	
+	private Boolean billUser;
+	
 	public User() {
 		init();
 	}
@@ -168,6 +170,18 @@ public class User {
 				+ registerTime + ", registerIp=" + registerIp + ", loginCount=" + loginCount + ", boolAdmin="
 				+ boolAdmin + ", booldisabled=" + booldisabled + ", lastLoginTime=" + lastLoginTime + ", lastLoginIp="
 				+ lastLoginIp + "]";
+	}
+
+
+
+	public Boolean getBillUser() {
+		return billUser;
+	}
+
+
+
+	public void setBillUser(Boolean billUser) {
+		this.billUser = billUser;
 	}
 	
 	

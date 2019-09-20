@@ -43,6 +43,7 @@
   <mappers>
     <mapper resource="cn/wycfm/config/sqlxml/Content.xml"/>
     <mapper resource="cn/wycfm/bill/model/sqlxml/Bill.xml"/>
+    <mapper resource="cn/wycfm/core/model/sqlxml/User.xml"/>
   </mappers>
 
 </configuration>

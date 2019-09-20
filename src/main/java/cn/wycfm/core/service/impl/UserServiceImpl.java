@@ -15,11 +15,12 @@ public class UserServiceImpl implements UserService{
 	public User getUser(String userName, String password) {
 		UserDao userDao = new UserDaoImpl();
 		if(userName != null && password != null) {
-			try {
-				return userDao.getUser(userName, password);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			User u = new User();
+			u.setUserName(userName);
+			u.setPassword(password);
+		
+			return userDao.getUserForLogin(u);
+			
 		}
 		return null;
 	}

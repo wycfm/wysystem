@@ -12,4 +12,6 @@ public interface UserDao {
 	List<User> listUser(Integer size, Integer offSet) throws SQLException;
 	void saveUser(User user) throws SQLException;
 	void updateUser(User user) throws SQLException;
+	
+	User getUserForLogin(User user);
 }

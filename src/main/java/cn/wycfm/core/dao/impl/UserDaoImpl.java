@@ -1,15 +1,19 @@
 package cn.wycfm.core.dao.impl;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
 
 import cn.wycfm.core.dao.BaseDao;
 import cn.wycfm.core.dao.UserDao;
 import cn.wycfm.core.jdbc.ParameterizedRowMapper;
 import cn.wycfm.core.jdbc.ResultSetExtractor;
 import cn.wycfm.core.model.User;
+import cn.wycfm.db.DBAccess;
 
 public class UserDaoImpl extends BaseDao implements UserDao {
 
@@ -103,6 +107,21 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 		Object[] args = new Object[] {mobile, email, signature, userId};
 		int[] argTypes = new int[] {Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.INTEGER};
 		this.executeForUpdate(sql, args, argTypes);
+	}
+	
+	public User getUserForLogin(User user) {
+		DBAccess dbAccess = new DBAccess();
+		User userResult = null;
+		SqlSession sqlSession = null;
+		
+		try {
+			sqlSession = dbAccess.getSqlSession();
+			userResult = sqlSession.selectOne("User.getUserForLogin", user);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return userResult;
 	}
 
 }
