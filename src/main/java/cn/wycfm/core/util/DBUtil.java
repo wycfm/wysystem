@@ -9,14 +9,14 @@ import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
 
-import com.mchange.v2.c3p0.ComboPooledDataSource;
+//import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public class DBUtil {
 	private static Logger logger = Logger.getLogger(DBUtil.class);
 	private static DataSource dataSource = null;
 	
 	static {
-		dataSource = new ComboPooledDataSource("mysql");
+		//dataSource = new ComboPooledDataSource("mysql");
 	}
 	
 	public static Connection getConnection() throws SQLException{

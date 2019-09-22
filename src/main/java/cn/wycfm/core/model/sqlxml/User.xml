@@ -34,7 +34,7 @@
 	<select id="getUserForLogin" parameterType="cn.wycfm.core.model.User" resultMap="UserResult">
 		select user_id,username,nickname,signature,mobile,email 
 		from user 
-		where is_disabled=1
+		where is_disabled=0
 		<choose>
 			<when test="userName!=null and !&quot;&quot;.equals(userName.trim()) 
 			and password!=null and !&quot;&quot;.equals(password.trim())">

@@ -226,7 +226,7 @@ $(function(){
 			for(var i=0; i < datas.length; i++){
 				var data = datas[i];
 				var trHtml = ['<tr>'];
-				trHtml.push('<td>',data.nickName,'</td>');
+				trHtml.push('<td>',data.user.nickName,'</td>');
 				trHtml.push('<td>',data.billDate,'</td>');
 				trHtml.push('<td>',data.description,'</td>');
 				trHtml.push('<td>',data.amount,'</td>');

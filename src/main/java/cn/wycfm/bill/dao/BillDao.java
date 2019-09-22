@@ -12,9 +12,10 @@ import cn.wycfm.core.model.User;
 public interface BillDao {
 
 	Bill getBill(Integer billId) throws SQLException;
-	List<BillResult> listBill(BillQuery bill) throws SQLException;
-	List<Map<String,String>> listSumBill(BillQuery q) throws SQLException;
+	//List<BillResult> listBill(BillQuery bill) throws SQLException;
+	List<Map<String,String>> listSumBillByUser(BillQuery q) ;
 	void saveBill(Bill bill) throws SQLException;
 	void updateBill(Bill bill) throws SQLException;
 	void deleteBill(Bill bill, User user) throws SQLException;
+	List<Bill> queryBillList(BillQuery bill);
 }

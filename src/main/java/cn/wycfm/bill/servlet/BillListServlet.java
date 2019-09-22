@@ -54,8 +54,9 @@ public class BillListServlet extends HttpServlet {
 		query.setStartDate(startDate);
 		query.setEndDate(endDate);
 		query.setUserIds(userIds);
-		List<BillResult> listBill = billService.listBill(query, user);
-		ResultBean<List<BillResult>> result = new ResultBean<List<BillResult>>();
+		//List<BillResult> listBill = billService.listBill(query, user);
+		List<Bill> listBill = billService.queryBillList(query);
+		ResultBean<List<Bill>> result = new ResultBean<List<Bill>>();
 		result.setResult(listBill);
 		FrontUtils.resultResponse(response, result);
 		

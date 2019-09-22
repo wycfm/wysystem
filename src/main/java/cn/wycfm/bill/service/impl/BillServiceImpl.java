@@ -2,7 +2,7 @@ package cn.wycfm.bill.service.impl;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +11,6 @@ import cn.wycfm.bill.dao.BillDao;
 import cn.wycfm.bill.dao.impl.BillDaoImpl;
 import cn.wycfm.bill.model.Bill;
 import cn.wycfm.bill.model.BillQuery;
-import cn.wycfm.bill.model.BillResult;
 import cn.wycfm.bill.service.BillService;
 import cn.wycfm.core.model.ResultBean;
 import cn.wycfm.core.model.User;
@@ -22,40 +21,21 @@ public class BillServiceImpl implements BillService{
 		return null;
 	}
 
-	public List<BillResult> listBill(BillQuery bill, User user) {
-		BillDao billDao = new BillDaoImpl();
-		try {
-			if(bill!=null) {
-				String userIds = bill.getUserIds();
-				if("-1".equals(userIds)) {
-					bill.setUserIds("5,10,11");
-				}
-			}
-			List<BillResult> listBill = billDao.listBill(bill);
-			return listBill;
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
-		return null;
-	}
 	
-	public List<Map<String, String>> listSumBill(BillQuery bill) {
+	
+	public List<Map<String, String>> listSumBillByUser(BillQuery bill) {
 		BillDao billDao = new BillDaoImpl();
-		try {
-			if(bill!=null) {
-				String userIds = bill.getUserIds();
-				if("-1".equals(userIds)) {
-					bill.setUserIds("5,10,11");
-				}
-			}
-			List<Map<String, String>> result = billDao.listSumBill(bill);
-			return result;
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
+		String userIds = bill.getUserIds();
+		if("-1".equals(userIds)) {
+			List<Integer> list = new ArrayList<Integer>();
+			list.add(5);
+			list.add(10);
+			list.add(11);
+			bill.setUserIds("5,10,11");
+			bill.setQuserIds(list);
 		}
-		return null;
+		List<Map<String, String>> result = billDao.listSumBillByUser(bill);
+		return result;
 	}
 
 	public ResultBean<Integer> saveBill(Bill bill, User user) {
@@ -97,6 +77,26 @@ public class BillServiceImpl implements BillService{
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	public List<Bill> queryBillList(BillQuery bill) {
+		BillDao billDao = new BillDaoImpl();
+
+		String userIds = bill.getUserIds();
+		if("-1".equals(userIds)) {
+			List<Integer> list = new ArrayList<Integer>();
+			list.add(5);
+			list.add(10);
+			list.add(11);
+			bill.setUserIds("5,10,11");
+			bill.setQuserIds(list);
+		}
+			
+			
+		List<Bill> listBill = billDao.queryBillList(bill);
+		
+	
+		return listBill;
 	}
 
 

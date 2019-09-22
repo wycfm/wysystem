@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.apache.log4j.Logger;
 
 import cn.wycfm.bill.dao.BillDao;
 import cn.wycfm.bill.model.Bill;
 import cn.wycfm.bill.model.BillQuery;
-import cn.wycfm.bill.model.BillResult;
 import cn.wycfm.core.dao.BaseDao;
 import cn.wycfm.core.jdbc.ParameterizedRowMapper;
 import cn.wycfm.core.model.User;
@@ -22,11 +22,13 @@ import cn.wycfm.db.DBAccess;
 
 public class BillDaoImpl extends BaseDao implements BillDao{
 
+	private static Logger log = Logger.getLogger(BillDaoImpl.class);
+	
 	public Bill getBill(Integer billId) {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
+	/*@SuppressWarnings("unchecked")
 	public List<BillResult> listBill(BillQuery bill) throws SQLException {
 		StringBuilder sql = new StringBuilder();
 		sql.append("select b.bill_id,date_format(b.bill_date,'%Y-%m-%d') as bill_date,b.description,b.amount,b.user_id,b.input_time,b.year,b.month, ")
@@ -57,54 +59,26 @@ public class BillDaoImpl extends BaseDao implements BillDao{
 			}
 		});
 		
-	}
+	}*/
 
-	@SuppressWarnings("unchecked")
-	public List<Map<String, String>> listSumBill(BillQuery q) throws SQLException{
-		StringBuilder sql = new StringBuilder();
-		sql.append("select b.user_id ,sum(b.amount) as total,u.nickname ")
-		.append(" from bill_base b ")
-		.append(" inner join user u on u.user_id=b.user_id ")
-		.append(" where b.bill_date>=? and b.bill_date<=? and b.user_id in (").append(q.getUserIds()).append(") and b.status=1 group by b.user_id,u.nickname  ");
-		Object[] args = new Object[] {q.getStartDate(), q.getEndDate()};
-		int[] argTypes = new int[] {Types.DATE, Types.DATE};
-		return this.queryForList(sql.toString(), args, argTypes, new ParameterizedRowMapper<Object>() {
-			
-			public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Map<String, String> bq = new HashMap<String, String>();
-				bq.put("userId", rs.getString("user_id"));
-				bq.put("total", rs.getString("total"));
-				bq.put("nickName", rs.getString("nickname"));
-				return bq;
-			}
-		});
+	/**
+	 * 统计每个人在花费多少钱
+	 */
+	public List<Map<String, String>> listSumBillByUser(BillQuery q) {
+		DBAccess dbAccess = new DBAccess();
+		SqlSession sqlSession = null;
+		List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+		try {
+			sqlSession = dbAccess.getSqlSession();
+			result = sqlSession.selectList("Bill.listSumBillByUser",q);
+		} catch (IOException e) {
+			e.printStackTrace();
+			log.error(e.getMessage());
+		}
+		return result;
 	}
 	
-	/*public void saveBill(Bill bill) throws SQLException {
-		String sql = "insert into bill_base(bill_date,description,amount,user_id,input_time,year,month) values(?,?,?,?,?,?,?);";
-		Object[] args = new Object[] {bill.getBillDate(), bill.getDescription(), bill.getAmount(),
-				bill.getUserId(), bill.getInputTime(), bill.getYear(), bill.getMonth()};
-		int[] argTypes = new int[] {Types.VARCHAR, Types.VARCHAR , Types.DOUBLE,
-				Types.INTEGER, Types.TIMESTAMP, Types.INTEGER, Types.INTEGER};
-		this.executeForUpdate(sql, args, argTypes);
-	}
-
-	public void updateBill(Bill bill) throws SQLException{
-		String sql = "update bill_base set bill_date=?, description=?, amount=? where bill_id=? and user_id=?";
-		Object[] args = new Object[] {bill.getBillDate(), bill.getDescription(), bill.getAmount(),
-				bill.getBillId(), bill.getUserId() };
-		int[] argTypes = new int[] {Types.VARCHAR, Types.VARCHAR , Types.DOUBLE,
-				Types.INTEGER, Types.TIMESTAMP, Types.INTEGER, Types.INTEGER, Types.VARCHAR};
-		this.executeForUpdate(sql, args, argTypes);
-	}
-
-	public void deleteBill(Bill bill, User user) throws SQLException{
-		String sql = "update bill_base set status=0 where user_id=? and bill_id=? ";
-		Object[] args = new Object[]{user.getUserId(), bill.getBillId()};
-		int[] argTypes = new int[] {Types.INTEGER, Types.INTEGER};
-		
-		this.executeForUpdate(sql, args, argTypes);
-	}*/
+	
 
 	public void saveBill(Bill bill) throws SQLException {
 		DBAccess dbAccess = new DBAccess();
@@ -114,8 +88,8 @@ public class BillDaoImpl extends BaseDao implements BillDao{
 			sqlSession.insert("Bill.saveBill", bill);
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 	}
 
@@ -127,8 +101,8 @@ public class BillDaoImpl extends BaseDao implements BillDao{
 			sqlSession.update("Bill.updateBill", bill);
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 	}
 
@@ -141,8 +115,8 @@ public class BillDaoImpl extends BaseDao implements BillDao{
 			sqlSession.update("Bill.deleteBill", bill);
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 	}
 	
@@ -156,26 +130,12 @@ public class BillDaoImpl extends BaseDao implements BillDao{
 			list = sqlSession.selectList("Bill.queryBillList", bill);
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 		
 	
 		return list;
 	}
 	
-	public static void main(String[] args) {
-		List<Integer> list = new ArrayList<Integer>();
-		list.add(10);
-		list.add(5);
-		BillQuery bq = new BillQuery();
-		bq.setQuserIds(list);
-		BillDaoImpl b = new BillDaoImpl();
-		List<Bill> queryBillList = b.queryBillList(bq);
-		for(Bill bill: queryBillList) {
-			System.out.println(bill.description);
-			System.out.println(bill.getUser());
-		}
-	}
-
 }

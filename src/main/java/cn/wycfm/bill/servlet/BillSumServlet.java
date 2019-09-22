@@ -48,7 +48,7 @@ public class BillSumServlet extends HttpServlet {
 		query.setStartDate(startDate);
 		query.setEndDate(endDate);
 		query.setUserIds(userIds);
-		List<Map<String,String>> listBill = billService.listSumBill(query);
+		List<Map<String,String>> listBill = billService.listSumBillByUser(query);
 		ResultBean<List<Map<String,String>>> result = new ResultBean<List<Map<String,String>>>();
 		result.setResult(listBill);
 		FrontUtils.resultResponse(response, result);

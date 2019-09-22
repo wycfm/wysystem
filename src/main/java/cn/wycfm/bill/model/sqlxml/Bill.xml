@@ -35,7 +35,7 @@
 	</resultMap>
 	
 	<select id="queryBillList" parameterType="cn.wycfm.bill.model.BillQuery" resultMap="BillResult">
-		select b.bill_id,b.description,b.amount,b.status,u.user_id,u.username,u.nickname from bill_base b
+		select b.bill_id,b.description,b.amount,b.bill_date,b.status,u.user_id,u.username,u.nickname from bill_base b
 		left join user u on u.user_id=b.user_id
 		where b.status=1
 		<if test="startDate!=null and !&quot;&quot;.equals(startDate.trim())">
@@ -52,7 +52,27 @@
 			)
 		</if>
 		
-		
+	</select>
+	
+	<select id="listSumBillByUser" parameterType="cn.wycfm.bill.model.BillQuery" resultMap="java.util.HashMap">
+		select b.user_id as userId ,sum(b.amount) as total
+		from bill_base b
+		inner join user u on u.user_id=b.user_id
+		where b.status=1 
+		<if test="startDate!=null and !&quot;&quot;.equals(startDate.trim())">
+			and b.bill_date &gt;= #{startDate}
+		</if>
+		<if test="endDate!=null and !&quot;&quot;.equals(endDate.trim())">
+			and b.bill_date &lt;= #{endDate}
+		</if>
+		<if test="quserIds!=null and quserIds.size() &gt; 0">
+			and b.user_id in (
+				<foreach collection="quserIds" index="i" item="item" separator=",">
+					#{item}
+				</foreach>
+			)
+		</if>
+		group by b.user_id
 	</select>
 	
 	<insert id="saveBill" parameterType="cn.wycfm.bill.model.Bill" useGeneratedKeys="true">
