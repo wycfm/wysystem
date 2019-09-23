@@ -1,11 +1,8 @@
 package cn.wycfm.bill.dao.impl;
 
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +13,6 @@ import cn.wycfm.bill.dao.BillDao;
 import cn.wycfm.bill.model.Bill;
 import cn.wycfm.bill.model.BillQuery;
 import cn.wycfm.core.dao.BaseDao;
-import cn.wycfm.core.jdbc.ParameterizedRowMapper;
 import cn.wycfm.core.model.User;
 import cn.wycfm.db.DBAccess;
 
@@ -62,7 +58,7 @@ public class BillDaoImpl extends BaseDao implements BillDao{
 	}*/
 
 	/**
-	 * Õ≥º∆√ø∏ˆ»À‘⁄ª®∑—∂‡…Ÿ«Æ
+	 * ÁªüËÆ°ÊØè‰∏™‰∫∫ÁöÑ ÊÄªÊ∂àË¥π
 	 */
 	public List<Map<String, String>> listSumBillByUser(BillQuery q) {
 		DBAccess dbAccess = new DBAccess();
@@ -86,7 +82,7 @@ public class BillDaoImpl extends BaseDao implements BillDao{
 		try {
 			sqlSession = dbAccess.getSqlSession();
 			sqlSession.insert("Bill.saveBill", bill);
-			
+			sqlSession.commit();
 		} catch (IOException e) {
 			e.printStackTrace();
 			log.error(e.getMessage());
@@ -99,7 +95,7 @@ public class BillDaoImpl extends BaseDao implements BillDao{
 		try {
 			sqlSession = dbAccess.getSqlSession();
 			sqlSession.update("Bill.updateBill", bill);
-			
+			sqlSession.commit();
 		} catch (IOException e) {
 			e.printStackTrace();
 			log.error(e.getMessage());
@@ -113,7 +109,7 @@ public class BillDaoImpl extends BaseDao implements BillDao{
 			bill.setUserId(user.getUserId());
 			sqlSession = dbAccess.getSqlSession();
 			sqlSession.update("Bill.deleteBill", bill);
-			
+			sqlSession.commit();
 		} catch (IOException e) {
 			e.printStackTrace();
 			log.error(e.getMessage());

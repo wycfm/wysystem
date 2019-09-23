@@ -26,12 +26,18 @@ public class BillServiceImpl implements BillService{
 	public List<Map<String, String>> listSumBillByUser(BillQuery bill) {
 		BillDao billDao = new BillDaoImpl();
 		String userIds = bill.getUserIds();
+		List<Integer> list = new ArrayList<Integer>();
 		if("-1".equals(userIds)) {
-			List<Integer> list = new ArrayList<Integer>();
 			list.add(5);
 			list.add(10);
 			list.add(11);
 			bill.setUserIds("5,10,11");
+			bill.setQuserIds(list);
+		}else {
+			String[] split = userIds.split(",");
+			for(String s : split) {
+				list.add(Integer.valueOf(s));
+			}
 			bill.setQuserIds(list);
 		}
 		List<Map<String, String>> result = billDao.listSumBillByUser(bill);
@@ -83,12 +89,19 @@ public class BillServiceImpl implements BillService{
 		BillDao billDao = new BillDaoImpl();
 
 		String userIds = bill.getUserIds();
+		List<Integer> list = new ArrayList<Integer>();
 		if("-1".equals(userIds)) {
-			List<Integer> list = new ArrayList<Integer>();
+			
 			list.add(5);
 			list.add(10);
 			list.add(11);
 			bill.setUserIds("5,10,11");
+			bill.setQuserIds(list);
+		}else {
+			String[] split = userIds.split(",");
+			for(String s : split) {
+				list.add(Integer.valueOf(s));
+			}
 			bill.setQuserIds(list);
 		}
 			

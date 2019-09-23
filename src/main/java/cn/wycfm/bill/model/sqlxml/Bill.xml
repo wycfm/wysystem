@@ -27,11 +27,8 @@
 		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
 		<result column="year" jdbcType="INTEGER" property="year" />
 		<result column="month" jdbcType="INTEGER" property="month" />
-		<association property="user" javaType="cn.wycfm.core.model.User">
-			<id column="user_id" property="userId"/>
-			<result column="username" property="userName"/>
-			<result column="nickname" property="nickName"/>
-		</association>
+		<association property="user" javaType="cn.wycfm.core.model.User" resultMap="User.UserResult" />
+			
 	</resultMap>
 	
 	<select id="queryBillList" parameterType="cn.wycfm.bill.model.BillQuery" resultMap="BillResult">
@@ -54,8 +51,8 @@
 		
 	</select>
 	
-	<select id="listSumBillByUser" parameterType="cn.wycfm.bill.model.BillQuery" resultMap="java.util.HashMap">
-		select b.user_id as userId ,sum(b.amount) as total
+	<select id="listSumBillByUser" parameterType="cn.wycfm.bill.model.BillQuery" resultType="java.util.HashMap">
+		select b.user_id as userId ,sum(b.amount) as total, u.nickname as nickName
 		from bill_base b
 		inner join user u on u.user_id=b.user_id
 		where b.status=1 
@@ -77,16 +74,16 @@
 	
 	<insert id="saveBill" parameterType="cn.wycfm.bill.model.Bill" useGeneratedKeys="true">
 		insert into bill_base(bill_date,description,amount,user_id,input_time,year,month)
-		values(#{billDate},#{description},#{amount},#{userId},#{input_time},#{year},#{month})
+		values(#{billDate},#{description},#{amount},#{userId},#{inputTime},#{year},#{month})
 	</insert>
 
 	<update id="updateBill" parameterType="cn.wycfm.bill.model.Bill" >
-		update bill_base set bill_date=#{billDate}, description=#{description}, amount=#{amount} 
+		update bill_base set bill_date=#{billDate}, description=#{description}, amount=#{amount} ,update_time=now()
 		where bill_id=#{billId} and user_id=#{userId}
 	</update>
 	
 	<update id="deleteBill" parameterType="cn.wycfm.bill.model.Bill">
-		update bill_base set status=0 where user_id=#{userId} and bill_id=#{billId}
+		update bill_base set status=0, update_time=now() where user_id=#{userId} and bill_id=#{billId}
 	</update>
 	
 </mapper>
