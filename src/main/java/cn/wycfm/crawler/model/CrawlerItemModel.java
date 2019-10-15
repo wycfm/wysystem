@@ -5,6 +5,13 @@ public class CrawlerItemModel {
 	private String columnName;
 	private String selectStr;
 	
+	public CrawlerItemModel() {}
+	
+	public CrawlerItemModel(String columnName, String selectStr) {
+		this.columnName = columnName;
+		this.selectStr = selectStr;
+	}
+	
 	public String getColumnName() {
 		return columnName;
 	}
