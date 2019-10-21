@@ -111,6 +111,9 @@ $(function(){
 				trHtml.push('</tr>');
 				htmlArr.push(trHtml.join(''));
 			}
+			if(datas.length>10){
+				htmlArr.push('<tr><td>......</td><td>......</td></tr>');
+			}
 			$("#dataTable").html(htmlArr.join(''));
 		}else{
 			$("#dataTable").html('无数据');

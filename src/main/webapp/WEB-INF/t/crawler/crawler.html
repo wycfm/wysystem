@@ -43,7 +43,7 @@
 					<tr>
 					  <th scope="row">入口链接地址：</th>
 					  <td>
-						  <textarea id="crawlerUrl" class="form-control" autocomplete="off" name="crawlerUrl" required="required" ></textarea>
+						  <textarea id="crawlerUrl" class="form-control" autocomplete="off" maxlength=500  name="crawlerUrl" required="required" ></textarea>
 						  <div class="invalid-feedback"><small>必填</small></div>
 					  </td>
 					  <td></td>
@@ -106,6 +106,50 @@
 			    </tbody> -->
 			</table>
 		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				页面需要抓取的数据项（列）:
+			</div>
+			
+		</div>
+		<div class="row " style="height:20px;">
+			
+		</div>
+		
+		<form id="crawlerSubmit" action="" method="post" class="form-inline">
+			<table class="table table-light">
+		     
+					<tr>
+					  <th scope="row">：</th>
+					  <td>
+						  <textarea id="crawlerUrl" class="form-control" autocomplete="off" name="crawlerUrl" required="required" ></textarea>
+						  <div class="invalid-feedback"><small>必填</small></div>
+					  </td>
+					  <td></td>
+					  <td></td>
+					</tr>
+					<tr>
+					  <th scope="row">递归链接目标元素：</th>
+					  <td>
+					  <input type="text" name="targetSelectStr" class="form-control" autocomplete="off" maxlength="200" >
+					  <div class="invalid-feedback"><small>必填</small></div>
+					  </td>
+					  <td></td>
+					  <td></td>
+					</tr>
+					
+					 
+					<tr>
+					  <th scope="row"></th>
+					  <td><input type="submit" value="提交" class="btn btn-info" ></td>
+					  <td></td>
+					  <td></td>
+					</tr>
+					
+			</table>
+		</form>
+		
+		
 		<div class="row">
 			<div class="col-sm-1">
 				<button type="button" id="count-button" class="btn btn-primary">下载</button>
