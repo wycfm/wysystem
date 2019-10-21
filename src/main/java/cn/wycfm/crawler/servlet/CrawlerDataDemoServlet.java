@@ -29,9 +29,7 @@ public class CrawlerDataDemoServlet extends HttpServlet{
 		//"https://www.cnblogs.com/"   "div.post_item_body a.titlelnk"
 		
 		CrawlerService cs = new CrawlerServiceImpl();
-		List<AUrlModel> list = cs.getAUrlModelList(crawlerUrl, selectStr);
-		ResultBean<List<AUrlModel>> result = new ResultBean<List<AUrlModel>>();
-		result.setResult(list);
+		ResultBean<List<AUrlModel>> result = cs.getAUrlModelList(crawlerUrl, selectStr);
 		FrontUtils.resultResponse(response, result);
 		
 	}

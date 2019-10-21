@@ -14,8 +14,7 @@ public class FrontUtils {
 
 	public static <T> void resultResponse(HttpServletResponse response, ResultBean<T> result) {
 		
-		result.setCode("200");
-		result.setStatus("success");
+		
 		Gson gson = new Gson();
 		String jsonResult = gson.toJson(result, new TypeToken<ResultBean<Object>>() {}.getType());
 		response.setContentType("application/json;charset=utf-8");

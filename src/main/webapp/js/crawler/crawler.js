@@ -29,15 +29,20 @@ $(function(){
 			data:d,
 			dataType:"json",
 			cache: false
-		}).done(function(data){
-			console.log(data);
+		}).done(function(datas){
+			console.log(datas);
 			isSubmit = false;
-			if(data.code=="200"){
-				initShowTable(data.result);
-			}else if(datas && datas.code=="400"){
+			if(datas.code=="200"){
+				if(datas.result.length>0){
+					initShowTable(datas.result);
+				}else{
+					alert("没有找到数据");
+				}
 				
+			}else if(datas && datas.code=="500"){
+				alert("链接错误");
 			}else{
-				
+				alert("error");
 			}
 			
 		});
@@ -94,7 +99,11 @@ $(function(){
 			        '<th>链接</th>',
 			      '</tr>',
 			    '</thead>'];
-			for(var i=0; i < datas.length; i++){
+			var len = 10;
+			if(datas.length < 10){
+				len = datas.length;
+			}
+			for(var i=0; i < len; i++){
 				var data = datas[i];
 				var trHtml = ['<tr>'];
 				trHtml.push('<td>',data.aText,'</td>');
